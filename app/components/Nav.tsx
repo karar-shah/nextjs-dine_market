@@ -1,21 +1,21 @@
+import Image from "next/image";
 import React from "react";
 
 export default function Nav() {
   return (
     <>
-      <nav className="flex justify-around my-8 mx-28 items-center font-medium tracking-wide">
+      <nav className="flex justify-between my-8 items-center font-medium tracking-wide">
         <div>
           <a href="/">
-            <img
-              src="https://full-stack-ecommerce-clothing-web.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.3267fed8.png&w=256&q=75"
-              alt=""
-            />
+            <Image src={"/Logo.webp"} alt="Dine Logo" width={140} height={25} />
           </a>
         </div>
-        <div>Female</div>
-        <div>Male</div>
-        <div>Kids</div>
-        <div>All Products</div>
+        <div className="flex gap-12">
+          <div>Female</div>
+          <div>Male</div>
+          <div>Kids</div>
+          <div>All Products</div>
+        </div>
         {/* Search bar */}
         <div className="border-2 border-gray-300 h-6 px-2 rounded-md flex items-center">
           <svg

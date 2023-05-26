@@ -1,11 +1,13 @@
 import Hero from "./components/Hero";
+import Hero1 from "./components/Hero1";
 import Nav from "./components/Nav";
 
 export default function Home() {
   return (
-    <>
+    <div className="mx-32">
       <Nav />
-      <Hero />
-    </>
+      <Hero1 />
+      {/* <Hero /> */}
+    </div>
   );
 }
