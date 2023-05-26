@@ -17,7 +17,7 @@ export default function Nav() {
         <div>Kids</div>
         <div>All Products</div>
         {/* Search bar */}
-        <div className="border-2 border-gray-300 h-6 px-2 rounded-md flex items-center w-80">
+        <div className="border-2 border-gray-300 h-6 px-2 rounded-md flex items-center">
           <svg
             stroke="currentColor"
             fill="currentColor"
@@ -41,7 +41,7 @@ export default function Nav() {
             </g>
           </svg>
           <input
-            className=" bg-white text-sm rounded-md "
+            className=" bg-white text-sm rounded-md w-80 px-2"
             type="search"
             name="search"
             placeholder="What you're looking for"
