@@ -82,7 +82,7 @@ export default function Hero1() {
         {/* Right Div */}
         <div>
           {/* Circle */}
-          <div className="w-[600px] h-[600px] bg-circleCream rounded-[50%] ">
+          <div className="w-[600px] h-[600px] bg-circleCream rounded-[50%] relative">
             <Image
               className="absolute"
               src={"/header.webp"}
