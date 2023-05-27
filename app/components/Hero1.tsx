@@ -5,22 +5,22 @@ export default function Hero1() {
   return (
     <>
       {/* Main Div */}
-      <div className="flex pt-12 pb-4 relative justify-between">
+      <div className="flex pt-12 pb-4 relative gap-12">
         {/* Left Div */}
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col gap-12">
           {/* Upper part */}
           <div className="flex bg-lighBlue text-textBlue font-semibold rounded-md w-28 h-10 items-center justify-center">
             Sale 70%
           </div>
-          <div className="text-textBlack font-bold text-6xl tracking-wide">
+          <div className="text-textBlack font-bold text-6xl tracking-wide max-w-[915px]">
             An Industrial Take on Streetwear
           </div>
-          <div className="text-textGrey font-normal text-base w-3/4 ">
+          <div className="text-textGrey font-normal text-base w-3/4 max-w-xl">
             Anyone can beat you but no one can beat your outfit as long as you
             wear Dine outfits.
           </div>
           {/* Black Button */}
-          <div className="flex text-base font-semibold w-2/6 p-4 bg-blackButton text-white items-center justify-center">
+          <div className="flex text-base font-semibold w-2/6 p-4 bg-blackButton text-white items-center justify-center border-l-2 border-t-2 border-textGrey">
             <button>
               <svg
                 className="pr-1"
@@ -84,7 +84,7 @@ export default function Hero1() {
           {/* Circle */}
           <div className="w-[600px] h-[600px] bg-circleCream rounded-[50%] relative">
             <Image
-              className="absolute"
+              className="absolute top-[-5%]"
               src={"/header.webp"}
               alt="HeroSection Girl"
               height={"650"}
