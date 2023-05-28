@@ -16,7 +16,8 @@ module.exports = {
       },
       colors: {
         lighBlue: '#e1edff',
-        textBlue: '#0000ff',
+        textSaleBlue: '#0000ff',
+        textBlue: '#0062f5',
         blackButton: '#212121',
         textBlack: '#212121',
         textGrey: '#666',

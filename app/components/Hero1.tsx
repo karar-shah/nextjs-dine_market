@@ -9,7 +9,7 @@ export default function Hero1() {
         {/* Left Div */}
         <div className="flex flex-col gap-12">
           {/* Upper part */}
-          <div className="flex bg-lighBlue text-textBlue font-semibold rounded-md w-28 h-10 items-center justify-center">
+          <div className="flex bg-lighBlue text-textSaleBlue font-semibold rounded-md w-28 h-10 items-center justify-center">
             Sale 70%
           </div>
           <div className="text-textBlack font-bold text-6xl tracking-wide max-w-[915px]">
