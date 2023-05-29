@@ -25,8 +25,8 @@ export default function MobilePopUp() {
               color="black"
               font-size="27"
               //   style="color:black"
-              height="1em"
-              width="1em"
+              height="2.5em"
+              width="2.5em"
               xmlns="http://www.w3.org/2000/svg"
             >
               <g>
@@ -45,8 +45,8 @@ export default function MobilePopUp() {
               color="black"
               font-size="27"
               //   class="close_icon"
-              height="1em"
-              width="1em"
+              height="3em"
+              width="3em"
               xmlns="http://www.w3.org/2000/svg"
               //   style="color: black;"
             >
@@ -62,23 +62,23 @@ export default function MobilePopUp() {
       <div className="fixed left-28 top-16 z-20 lg:hidden">
         <Image
           src="/Logo.webp"
-          height={25}
-          width={140}
+          height={50}
+          width={280}
           alt="Dine market logo"
         />
       </div>
       {!open && (
-        <div className="lg:hidden flex justify-center items-center flex-col w-full bg-white gap-4 fixed top-0 left-0 bottom-0 right-0 z-10">
+        <div className="lg:hidden text-4xl flex justify-center items-center flex-col w-full bg-white gap-9 fixed top-0 left-0 bottom-0 right-0 z-10">
           {/* List of links */}
           {/* Cart button */}
-          <button className="bg-gray-200 rounded-full p-3 relative">
+          <button className="bg-gray-200 rounded-full p-6 relative">
             <svg
               stroke="currentColor"
               fill="none"
               stroke-width="0"
               viewBox="0 0 24 24"
-              height="22"
-              width="22"
+              height="44"
+              width="44"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -96,7 +96,7 @@ export default function MobilePopUp() {
                 fill="currentColor"
               ></path>
             </svg>
-            <span className="bg-red-600 text-white rounded-full h-4 w-4 text-sm absolute top-0 right-1">
+            <span className="bg-red-600 text-white rounded-full h-8 w-8 text-xl absolute top-0 right-1">
               0
             </span>
           </button>
