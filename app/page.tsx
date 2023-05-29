@@ -1,5 +1,6 @@
 import Hero1 from "./components/Hero1";
 import Nav from "./components/Nav";
+import NewsLetter from "./components/NewsLetter";
 import Products from "./components/Products";
 
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
       <Nav />
       <Hero1 />
       <Products />
+      <NewsLetter />
     </div>
   );
 }
