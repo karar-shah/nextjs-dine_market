@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -14,7 +16,8 @@ module.exports = {
       },
       colors: {
         lighBlue: '#e1edff',
-        textBlue: '#0000ff',
+        textSaleBlue: '#0000ff',
+        textBlue: '#0062f5',
         blackButton: '#212121',
         textBlack: '#212121',
         textGrey: '#666',
@@ -22,5 +25,16 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities }) {
+    addUtilities({
+      '.drag-none': {
+        '-webkit-user-drag': 'none',
+        '-khtml-user-drag': 'none',
+        '-moz-user-drag': 'none',
+        '-o-user-drag': 'none',
+        'user-drag': 'none'
+      }
+    });
+  })],
 }
