@@ -36,9 +36,9 @@ export default function Promotions() {
           </div>
         </div>
         {/* Box 3 */}
-        <div className="bg-purple-200 col-span-4"></div>
+        <div className="bg-purple-200 row-span-2 col-span-4"></div>
         {/* Box 4 */}
-        <div className="bg-gray-400 col-span-4"></div>
+        <div className="bg-gray-400 row-span-2 col-span-4"></div>
       </div>
     </>
   );
