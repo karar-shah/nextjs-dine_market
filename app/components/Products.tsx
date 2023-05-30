@@ -14,7 +14,7 @@ export default function Products() {
       slidesPerView: 1,
     },
     768: {
-      width: 768,
+      width: 800,
       slidesPerView: 2,
     },
     1080: {
@@ -24,7 +24,7 @@ export default function Products() {
   };
 
   return (
-    <div className="py-16 ">
+    <div className=" lg:px-28 lg:py-16 px-8 py-16 ">
       {/* Top heading */}
       <div className="">
         <div className="text-xs font-bold tracking-widest text-textBlue text-center mb-4">
@@ -34,9 +34,9 @@ export default function Products() {
           Check What We Have
         </div>
       </div>
-      {/* Bottom Top Items */}
+      {/* Bottom Items */}
       <Swiper
-        spaceBetween={1}
+        spaceBetween={80}
         pagination={{
           clickable: true,
         }}
@@ -45,8 +45,8 @@ export default function Products() {
         breakpoints={responsive}
       >
         {products.map((items) => (
-          <SwiperSlide className="pl-[18px]" key={items.title}>
-            <div className="w-[380px] inline-block pt-8 pb-14  cursor-pointer hover:scale-110 ease-in-out duration-500">
+          <SwiperSlide className=" lg:pl-[18px] text-center" key={items.title}>
+            <div className="w-[300px] h-[320px]  lg:w-[380px] lg:2-[400px] inline-block pt-8 lg:pb-14  cursor-pointer hover:scale-110 ease-in-out duration-500">
               <Link
                 href={"https://artrayd.com/gift/"}
                 id="myLink"
@@ -58,7 +58,7 @@ export default function Products() {
                   width={380}
                   height={400}
                 />
-                <div className="text-left text-lg tracking-wide font-semibold text-textBlack mt-2">
+                <div className="text-center lg:text-left text-lg tracking-wide font-semibold text-textBlack mt-2">
                   <div>{items.title}</div>
                   <div className="">{items.price}</div>
                 </div>

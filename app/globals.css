@@ -16,3 +16,6 @@
 .swiper-pagination-bullet-active {
   background-color: rgb(117, 117, 117) !important;
 }
+.mySwiper .swiper-pagination {
+  display: none;
+}
