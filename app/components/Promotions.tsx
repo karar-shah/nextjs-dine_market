@@ -4,7 +4,7 @@ import React from "react";
 export default function Promotions() {
   return (
     <>
-      <div className="grid grid-rows-6 grid-cols-4 w-full gap-y-4">
+      <div className="grid grid-cols-4 auto-rows-min w-full gap-y-4">
         {/* Box 1 */}
         <div className="bg-gray-300 col-span-4 pt-8 px-8">
           <div className="flex flex-wrap justify-center">

@@ -5,7 +5,7 @@ import Promotions from "./components/Promotions";
 
 export default function Home() {
   return (
-    <div className="mx-8 lg:mx-32">
+    <div>
       <Nav />
       {/* <Hero1 /> */}
       <Promotions />
