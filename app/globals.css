@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
@@ -14,4 +15,7 @@
 }
 .swiper-pagination-bullet-active {
   background-color: rgb(117, 117, 117) !important;
+}
+.mySwiper .swiper-pagination {
+  display: none;
 }
