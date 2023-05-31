@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <>
       {/* Container */}
-      <div className="p-32 flex justify-around">
+      <div className="p-8 lg:p-32 flex justify-around flex-col gap-12 lg:flex-row">
         {/* Box 1 */}
         <div className="flex flex-col gap-8">
           <Image
@@ -121,6 +121,11 @@ export default function Footer() {
           <div>Whatsapp</div>
           <div>Support 24h</div>
         </div>
+      </div>
+      <hr />
+      <div className=" flex flex-col items-center justify-center gap-4 text-gray-800 p-4">
+        <div>© 2021 All Rights Reserved</div>
+        <div>Terms of Service Privacy Policy</div>
       </div>
     </>
   );
