@@ -37,6 +37,7 @@ export default function Products() {
       {/* Bottom Items */}
       <Swiper
         spaceBetween={80}
+        loop={true}
         pagination={{
           clickable: true,
         }}
