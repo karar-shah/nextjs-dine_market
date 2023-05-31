@@ -13,7 +13,7 @@ export default function MobilePopUp() {
       {/* Mobile popup open and close svgs */}
       <div
         onClick={handleOpen}
-        className="fixed right-20 top-10 z-20 lg:hidden"
+        className="absolute right-20 top-10 z-20 lg:hidden"
       >
         {open ? (
           <>
@@ -59,7 +59,7 @@ export default function MobilePopUp() {
         )}
       </div>
       {/* Dine market logo */}
-      <div className="fixed left-20 top-10 z-20 lg:hidden">
+      <div className="absolute left-20 top-10 z-20 lg:hidden">
         <Image
           src="/Logo.webp"
           height={20}
