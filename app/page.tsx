@@ -2,12 +2,14 @@ import Hero2 from "./components/Hero2";
 import Nav from "./components/Nav";
 import NewsLetter from "./components/NewsLetter";
 import Products from "./components/Products";
+import Promotions from "./components/Promotions";
 
 export default function Home() {
   return (
-    <div className="">
-      {/* <Nav /> */}
+    <div>
+      <Nav />
       <Hero2 />
+      <Promotions />
       <Products />
       <NewsLetter />
     </div>

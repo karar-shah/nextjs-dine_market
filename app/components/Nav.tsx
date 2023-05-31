@@ -4,7 +4,7 @@ import MobilePopUp from "../sections/MobilePopUp";
 export default function Nav() {
   return (
     <>
-      <nav className="py-16">
+      <nav className="py-16 xl:px-32">
         {/* Desktop view */}
         <div className="hidden lg:flex justify-between items-center tracking-wide">
           {/* Dine market logo */}

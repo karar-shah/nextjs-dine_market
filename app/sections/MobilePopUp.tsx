@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 
 export default function MobilePopUp() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const handleOpen = () => {
     setOpen(!open);
   };
@@ -13,7 +13,7 @@ export default function MobilePopUp() {
       {/* Mobile popup open and close svgs */}
       <div
         onClick={handleOpen}
-        className="fixed right-28 top-16 z-20 lg:hidden"
+        className="absolute right-20 top-10 z-20 lg:hidden"
       >
         {open ? (
           <>
@@ -59,19 +59,19 @@ export default function MobilePopUp() {
         )}
       </div>
       {/* Dine market logo */}
-      <div className="fixed left-28 top-16 z-20 lg:hidden">
+      <div className="absolute left-20 top-10 z-20 lg:hidden">
         <Image
           src="/Logo.webp"
-          height={25}
+          height={20}
           width={140}
           alt="Dine market logo"
         />
       </div>
       {!open && (
-        <div className="lg:hidden flex justify-center items-center flex-col w-full bg-white gap-4 fixed top-0 left-0 bottom-0 right-0 z-10">
+        <div className="lg:hidden text-xl flex justify-center items-center flex-col w-full bg-white gap-4 fixed top-0 left-0 bottom-0 right-0 z-10">
           {/* List of links */}
           {/* Cart button */}
-          <button className="bg-gray-200 rounded-full p-3 relative">
+          <button className="bg-gray-200 rounded-full p-4 relative">
             <svg
               stroke="currentColor"
               fill="none"
@@ -96,7 +96,7 @@ export default function MobilePopUp() {
                 fill="currentColor"
               ></path>
             </svg>
-            <span className="bg-red-600 text-white rounded-full h-4 w-4 text-sm absolute top-0 right-1">
+            <span className="bg-red-600 text-white rounded-full h-6 w-6 absolute top-0 right-1">
               0
             </span>
           </button>
