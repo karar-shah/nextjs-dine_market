@@ -4,6 +4,14 @@ import React from "react";
 export default function Promotions() {
   return (
     <>
+      <div className="">
+        <div className="text-xs font-bold tracking-widest text-textBlue text-center mb-4">
+          PROMOTIONS
+        </div>
+        <div className="font-bold text-4xl -tracking-tight text-textBlack text-center mb-8">
+          Our Promotions Events
+        </div>
+      </div>
       <div className="grid grid-cols-4 auto-rows-min gap-y-4 mx-6">
         {/* Box 1 */}
         <div className="bg-gray-300 col-span-4 pt-8 px-8">
