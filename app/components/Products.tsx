@@ -24,7 +24,7 @@ export default function Products() {
   };
 
   return (
-    <div className=" lg:px-28 lg:py-16 px-8 py-16 ">
+    <div className="py-16 px-8 lg:px-16 xl:px-32">
       {/* Top heading */}
       <div className="">
         <div className="text-xs font-bold tracking-widest text-textBlue text-center mb-4">
@@ -48,7 +48,8 @@ export default function Products() {
           <SwiperSlide className=" lg:pl-[18px] text-center" key={items.title}>
             <div className="w-[300px] h-[320px]  lg:w-[380px] lg:2-[400px] inline-block pt-8 lg:pb-14  cursor-pointer hover:scale-110 ease-in-out duration-500">
               <Link
-                href={"https://artrayd.com/gift/"}
+                href="#"
+                onClick={(e) => e.preventDefault()}
                 id="myLink"
                 className="drag-none"
               >

@@ -4,7 +4,7 @@ import React from "react";
 export default function Promotions() {
   return (
     <>
-      <div className="xl:px-32">
+      <div className="py-16 px-8 lg:px-16 xl:px-32">
         <div className="">
           <div className="text-xs font-bold tracking-widest text-textBlue text-center mb-4">
             PROMOTIONS
@@ -13,7 +13,7 @@ export default function Promotions() {
             Our Promotions Events
           </div>
         </div>
-        <div className="grid grid-cols-4 auto-rows-min gap-4 mx-6">
+        <div className="grid grid-cols-4 auto-rows-min gap-4 mx-0">
           {/* Box 1 */}
           <div className="bg-gray-300 col-span-4 pt-8 px-8 lg:row-span-1 lg:col-span-2">
             <div className="flex flex-wrap justify-center lg:flex-nowrap">
