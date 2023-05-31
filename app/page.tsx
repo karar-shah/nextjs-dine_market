@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div>
       <Nav />
-      {/* <Hero1 /> */}
+      <Hero1 />
       <Promotions />
       <Products />
     </div>
