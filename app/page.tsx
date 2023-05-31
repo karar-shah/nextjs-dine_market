@@ -1,3 +1,4 @@
+import Footer from "./components/Footer";
 import Hero2 from "./components/Hero2";
 import Nav from "./components/Nav";
 import NewsLetter from "./components/NewsLetter";
@@ -12,6 +13,7 @@ export default function Home() {
       <Promotions />
       <Products />
       <NewsLetter />
+      <Footer />
     </div>
   );
 }
