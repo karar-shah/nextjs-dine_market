@@ -23,11 +23,6 @@ module.exports = {
         textGrey: "#666",
         circleCream: "#ffece3",
       },
-      backgroundImage: {
-        promotion1: "url('/promotion1.webp')",
-        promotion2: "url('/promotion2.webp')",
-        promotion3: "url('/promotion3.webp')",
-      },
     },
   },
   plugins: [
