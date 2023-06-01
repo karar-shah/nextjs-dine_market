@@ -1,3 +1,4 @@
+import Features from "./components/Features";
 import Footer from "./components/Footer";
 import Hero2 from "./components/Hero2";
 import Nav from "./components/Nav";
@@ -12,6 +13,7 @@ export default function Home() {
       <Hero2 />
       <Promotions />
       <Products />
+      <Features />
       <NewsLetter />
       <Footer />
     </div>
