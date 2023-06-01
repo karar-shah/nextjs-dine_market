@@ -54,6 +54,7 @@ export default function Features() {
               height={350}
               width={300}
               alt="feature"
+              className="object-cover"
             />
             <div>
               <div className="my-8 tracking-wide text-justify text-gray-800 font-light">
@@ -64,7 +65,7 @@ export default function Features() {
               </div>
               <button
                 type="submit"
-                className="py-3 px-10 bg-gray-950 border-l-2 border-t-2 border-textGrey font-semibold text-sm text-white"
+                className="py-3 px-10 bg-blackButton border-l-2 border-t-2 border-textGrey font-semibold text-sm text-white"
               >
                 See All Products
               </button>

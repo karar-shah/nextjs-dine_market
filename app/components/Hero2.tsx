@@ -19,7 +19,7 @@ export default function Hero2() {
         </div>
         {/* Black Button */}
         <div className="flex text-base font-semibold min-w-[160px] lg:w-2/6 w-4/5 p-4 bg-blackButton text-white items-center justify-center border-l-2 border-t-2 border-textGrey">
-          <button>
+          <button className="flex flex-row items-center justify-center">
             <svg
               className="pr-1"
               stroke="currentColor"
@@ -45,8 +45,8 @@ export default function Hero2() {
                 fill="currentColor"
               ></path>
             </svg>
+            <div className="text-center">Start Shopping</div>
           </button>
-          <div className="text-center">Start Shopping</div>
         </div>
         {/* Lower logo part */}
         <div className="grid lg:grid-cols-4 grid-cols-2 gap-4">

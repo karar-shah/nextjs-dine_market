@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 export default function Footer() {
@@ -14,7 +15,7 @@ export default function Footer() {
             width={140}
             alt="Dine market logo"
           />
-          <p className="max-w-xs text-gray-800">
+          <p className="max-w-xs text-textGrey">
             Small, artisan label that offers a thoughtfully curated collection
             of high quality everyday essentials made.
           </p>
@@ -100,8 +101,8 @@ export default function Footer() {
           </div>
         </div>
         {/* Box 2 */}
-        <div className="flex flex-col gap-4 text-gray-800">
-          <div>Company</div>
+        <div className="flex flex-col gap-4 text-textGrey">
+          <div className="font-bold">Company</div>
           <div>About</div>
           <div>Terms of Use</div>
           <div>Privacy Policy</div>
@@ -109,23 +110,33 @@ export default function Footer() {
           <div>Contact Us</div>
         </div>
         {/* Box 3 */}
-        <div className="flex flex-col gap-4 text-gray-800">
-          <div>Support</div>
+        <div className="flex flex-col gap-4 text-textGrey">
+          <div className="font-bold">Support</div>
           <div>Support Carrer</div>
           <div>24h Service</div>
           <div>Quick Chat</div>
         </div>
         {/* Box 4 */}
-        <div className="flex flex-col gap-4 text-gray-800">
-          <div>Contact</div>
+        <div className="flex flex-col gap-4 text-textGrey">
+          <div className="font-bold">Contact</div>
           <div>Whatsapp</div>
           <div>Support 24h</div>
         </div>
       </div>
-      <hr />
-      <div className=" flex flex-col items-center justify-center gap-4 text-gray-800 p-4">
-        <div>© 2021 All Rights Reserved</div>
-        <div>Terms of Service Privacy Policy</div>
+      <div className=" flex flex-col lg:flex-row lg:items-center justify-around gap-5 text-textGrey py-4 px-8 border-t-[1px] border-black">
+        <div>Copyright © 2023 Dine Market</div>
+        <div className=" flex flex-col justify-center gap-1">
+          <div>Design & Code by ❤️</div>
+          <div className="flex  text-center gap-2 text-textBlack font-semibold">
+            <Link href={"https://github.com/sajid-munawar"}>
+              <div>Karar Shah</div>
+            </Link>
+            <div>|</div>
+            <Link href={"https://github.com/karar-shah"}>
+              <div>Sajid</div>
+            </Link>
+          </div>
+        </div>
       </div>
     </>
   );

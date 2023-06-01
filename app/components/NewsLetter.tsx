@@ -21,7 +21,7 @@ export default function NewsLetter() {
           />
           <button
             type="submit"
-            className="py-3 px-10 bg-black border-l-2 border-t-2 border-textGrey font-semibold text-sm text-white"
+            className="py-3 px-10 bg-blackButton border-l-2 border-t-2 border-textGrey font-semibold text-sm text-white"
           >
             Get Started
           </button>
