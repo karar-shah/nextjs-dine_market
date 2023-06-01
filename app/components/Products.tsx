@@ -79,4 +79,9 @@ const products = [
   { title: "Flex Sweatshirt", price: "$175", img: "/product3.png" },
   { title: "Pink Fleece Sweatpants", price: "$195", img: "/product5.png" },
   { title: "Brushed Raglan Sweatshirt", price: "$195", img: "/product1.png" },
+  { title: "Brushed Raglan Sweatshirt", price: "$195", img: "/product1.png" },
+  { title: "Cameryn Sash Tie Dress", price: "$454", img: "/product2.png" },
+  { title: "Flex Sweatshirt", price: "$175", img: "/product3.png" },
+  { title: "Pink Fleece Sweatpants", price: "$195", img: "/product5.png" },
+  { title: "Brushed Raglan Sweatshirt", price: "$195", img: "/product1.png" },
 ];
