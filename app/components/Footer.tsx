@@ -128,11 +128,11 @@ export default function Footer() {
         <div className=" flex flex-col justify-center gap-1">
           <div>Design & Code by ❤️</div>
           <div className="flex  text-center gap-2 text-textBlack font-semibold">
-            <Link href={"https://github.com/sajid-munawar"}>
+            <Link href={"https://github.com/karar-shah"}>
               <div>Karar Shah</div>
             </Link>
             <div>|</div>
-            <Link href={"https://github.com/karar-shah"}>
+            <Link href={"https://github.com/sajid-munawar"}>
               <div>Sajid</div>
             </Link>
           </div>
