@@ -9,12 +9,12 @@ export default function Features() {
           Unique and Authentic Vintage Designer Jewellery
         </h1>
         <div className="flex gap-4 flex-col xl:flex-row xl:gap-16">
-          <div className="absolute font-extrabold text-6xl lg:text-9xl text-backgroundGrey -z-10 pt-24 lg:pt-4 ">
-            Different from others
-          </div>
           {/* left/top part */}
           {/* 4 text boxes */}
-          <div className="flex flex-col gap-8 tracking-wider">
+          <div className="flex flex-col gap-8 tracking-wider relative">
+            <div className="absolute font-extrabold text-6xl lg:text-9xl text-backgroundGrey -z-10 pt-24 lg:pt-4 ">
+              Different from others
+            </div>
             {/* first row */}
             <div className="flex gap-4 sm:gap-8">
               <div>
