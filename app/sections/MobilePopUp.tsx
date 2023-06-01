@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 
 export default function MobilePopUp() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(!open);
   };
@@ -15,7 +15,7 @@ export default function MobilePopUp() {
         onClick={handleOpen}
         className="absolute right-10 top-10 z-20 lg:hidden"
       >
-        {open ? (
+        {!open ? (
           <>
             <svg
               stroke="currentColor"
@@ -67,11 +67,11 @@ export default function MobilePopUp() {
           alt="Dine market logo"
         />
       </div>
-      {!open && (
-        <div className="lg:hidden text-xl flex justify-center items-center flex-col w-full bg-white gap-4 fixed top-0 left-0 bottom-0 right-0 z-10">
+      {open && (
+        <div className="fixed bottom-0 left-0 right-0 top-0 z-10 flex w-full flex-col items-center justify-center gap-4 bg-white text-xl lg:hidden">
           {/* List of links */}
           {/* Cart button */}
-          <button className="bg-gray-200 rounded-full p-4 relative">
+          <button className="relative rounded-full bg-gray-200 p-4">
             <svg
               stroke="currentColor"
               fill="none"
@@ -96,7 +96,7 @@ export default function MobilePopUp() {
                 fill="currentColor"
               ></path>
             </svg>
-            <span className="bg-red-600 text-white rounded-full h-6 w-6 absolute top-0 right-1">
+            <span className="absolute right-1 top-0 h-6 w-6 rounded-full bg-red-600 text-white">
               0
             </span>
           </button>

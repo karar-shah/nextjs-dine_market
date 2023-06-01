@@ -6,7 +6,7 @@ export default function Nav() {
     <>
       <nav className="py-16 lg:px-24 xl:px-32">
         {/* Desktop view */}
-        <div className="hidden lg:flex justify-between items-center tracking-wide">
+        <div className="hidden items-center justify-between tracking-wide lg:flex">
           {/* Dine market logo */}
           <div>
             <Image
@@ -24,7 +24,7 @@ export default function Nav() {
             <div>All Products</div>
           </div>
           {/* Search bar */}
-          <div className="flex border-2 border-gray-300 h-6 px-2 rounded-md items-center">
+          <div className="flex h-6 items-center rounded-md border-2 border-gray-300 px-2">
             <svg
               stroke="currentColor"
               fill="currentColor"
@@ -48,14 +48,14 @@ export default function Nav() {
               </g>
             </svg>
             <input
-              className=" bg-white text-sm rounded-md px-2 max-w-sm"
+              className=" max-w-sm rounded-md bg-white px-2 text-sm"
               type="search"
               name="search"
               placeholder="What you're looking for"
             />
           </div>
           {/* Cart button */}
-          <button className="bg-gray-200 rounded-full p-3 relative">
+          <button className="relative rounded-full bg-gray-200 p-3">
             <svg
               stroke="currentColor"
               fill="none"
@@ -80,7 +80,7 @@ export default function Nav() {
                 fill="currentColor"
               ></path>
             </svg>
-            <span className="bg-red-600 text-white rounded-full h-4 w-4 text-sm absolute top-0 right-1">
+            <span className="absolute right-1 top-0 h-4 w-4 rounded-full bg-red-600 text-sm text-white">
               0
             </span>
           </button>
