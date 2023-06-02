@@ -1,6 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-const plugin = require('tailwindcss/plugin');
-
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -18,12 +16,6 @@ module.exports = {
     },
     extend: {
       colors: {
-        lighBlue: '#e1edff',
-        textBlue: '#0000ff',
-        blackButton: '#212121',
-        textBlack: '#212121',
-        textGrey: '#666',
-        circleCream: '#ffece3',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -79,17 +71,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), plugin(function ({ addUtilities }) {
-    addUtilities({
-      '.drag-none': {
-        '-webkit-user-drag': 'none',
-        '-khtml-user-drag': 'none',
-        '-moz-user-drag': 'none',
-        '-o-user-drag': 'none',
-        'user-drag': 'none'
-      }
-    });
-  })],
+  plugins: [require("tailwindcss-animate")],
 }
-
-
