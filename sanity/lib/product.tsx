@@ -5,7 +5,7 @@ export const products = {
   fields: [
     {
       name: "title",
-      title: "Tiele",
+      title: "Title",
       type: "string",
     },
     {

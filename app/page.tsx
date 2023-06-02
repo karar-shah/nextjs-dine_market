@@ -28,11 +28,13 @@ export default async function Home() {
       <Nav />
       {data.map((items) => (
         <div key={items.title}>
+          <div>Page.tsx</div>
           <div>{items.title}</div>
           <div>{items.price}</div>
         </div>
       ))}
-      {/* <FetchProducts /> */}
+      {/* @ts-expect-error Server Component */}
+      <FetchProducts />
       <Hero2 />
       <Promotions />
       <Products />

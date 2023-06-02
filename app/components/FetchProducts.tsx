@@ -19,6 +19,7 @@ export default async function FetchProducts() {
     <>
       {data.map((items) => (
         <div key={items.title}>
+          <div>FetchProducts</div>
           <div>{items.title}</div>
           <div>{items.price}</div>
         </div>
