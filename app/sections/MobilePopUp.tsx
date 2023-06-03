@@ -61,7 +61,7 @@ export default function MobilePopUp() {
       </div>
       {/* Dine market logo */}
       <div className="absolute left-10 top-10 z-20 lg:hidden">
-        <Link href="/">
+        <Link href="/" onClick={() => setOpen(false)}>
           <Image
             src="/Logo.webp"
             height={25}
@@ -75,7 +75,7 @@ export default function MobilePopUp() {
           {/* List of links */}
           <li>
             {/* Cart button */}
-            <Link href={"/cart"}>
+            <Link onClick={() => setOpen(!open)} href="/cart">
               <button className="relative rounded-full bg-gray-200 p-4">
                 <svg
                   stroke="currentColor"
@@ -108,16 +108,24 @@ export default function MobilePopUp() {
             </Link>
           </li>
           <li>
-            <Link href="/female">Female</Link>
+            <Link onClick={() => setOpen(!open)} href="/female">
+              Female
+            </Link>
           </li>
           <li>
-            <Link href="/male">Male</Link>
+            <Link onClick={() => setOpen(!open)} href="/male">
+              Male
+            </Link>
           </li>
           <li>
-            <Link href="/kids">Kids</Link>
+            <Link onClick={() => setOpen(!open)} href="/kids">
+              Kids
+            </Link>
           </li>
           <li>
-            <Link href="/all-products">All Products</Link>
+            <Link onClick={() => setOpen(!open)} href="/all-products">
+              All Products
+            </Link>
           </li>
         </ul>
       )}
