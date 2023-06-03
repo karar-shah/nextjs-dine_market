@@ -1,5 +1,6 @@
 import Image from "next/image";
 import MobilePopUp from "../sections/MobilePopUp";
+import Link from "next/link";
 
 export default function Nav() {
   return (
@@ -8,21 +9,31 @@ export default function Nav() {
         {/* Desktop view */}
         <div className="hidden items-center justify-between tracking-wide lg:flex">
           {/* Dine market logo */}
-          <div>
+          <Link href="/">
             <Image
               src="/Logo.webp"
               height={25}
               width={140}
               alt="Dine market logo"
             />
-          </div>
+          </Link>
           {/* List of links*/}
-          <div className="flex items-center justify-between gap-10">
-            <div>Female</div>
-            <div>Male</div>
-            <div>Kids</div>
-            <div>All Products</div>
-          </div>
+
+          <ul className="flex items-center justify-between gap-10">
+            <li>
+              <Link href="/female">Female</Link>
+            </li>
+            <li>
+              <Link href="/male">Male</Link>
+            </li>
+            <li>
+              <Link href="/kids">Kids</Link>
+            </li>
+            <li>
+              <Link href="/all-products">All Products</Link>
+            </li>
+          </ul>
+
           {/* Search bar */}
           <div className="flex h-6 items-center rounded-md border-2 border-gray-300 px-2">
             <svg
