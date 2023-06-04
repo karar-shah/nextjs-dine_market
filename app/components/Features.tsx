@@ -5,7 +5,7 @@ import { urlForImage } from "@/sanity/lib/image";
 
 export const getProductData = async () => {
   const res = await client.fetch(
-    `*[_type=="product" && title=="Feature r1"]{image}`
+    `*[_type=="staticImage" && title=="Feature r1"]{image}`
   );
   return res;
 };

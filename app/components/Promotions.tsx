@@ -5,7 +5,7 @@ import { urlForImage } from "@/sanity/lib/image";
 
 export const getProductData = async () => {
   const res = await client.fetch(
-    `*[_type=="product" && title=="Promotion l1" || title == "Promotion r1" || title == "Promotion r2"]{image}`
+    `*[_type=="staticImage" && title=="Promotion l1" || title == "Promotion r1" || title == "Promotion r2"]{image}`
   );
   return res;
 };
@@ -42,7 +42,7 @@ export default async function Promotions() {
                 </div>
               </div>
               <Image
-                src={urlForImage(data[0].image).url()}
+                src={urlForImage(data[2].image).url()}
                 height={250}
                 width={250}
                 alt="Promotion 1"
@@ -91,7 +91,7 @@ export default async function Promotions() {
             </div>
             <div className="flex justify-center">
               <Image
-                src={urlForImage(data[2].image).url()}
+                src={urlForImage(data[0].image).url()}
                 height={250}
                 width={250}
                 className="xl:absolute xl:bottom-0"
