@@ -1,24 +1,39 @@
 import Image from "next/image";
-import React from "react";
+import { client } from "../lib/sanityClient";
+import { Image as Iimage } from "sanity";
+import { urlForImage } from "@/sanity/lib/image";
 
-export default function Hero2() {
+export const getProductData = async () => {
+  const res = await client.fetch(
+    `*[_type=="product" && title=="Cameryn Sash Tie Dress"]{image}`
+  );
+  return res;
+};
+
+interface IProducts {
+  image: Iimage;
+}
+
+export default async function Hero2() {
+  const data: IProducts[] = await getProductData();
+
   return (
-    <header className="flex relative mx-8 pt-8 gap-16 lg:ml-16 xl:ml-32 lg:mr-0 lg:my-16 ">
+    <header className="relative mx-8 flex gap-16 pt-8 lg:my-16 lg:ml-16 lg:mr-0 xl:ml-32 ">
       {/* Left Div */}
-      <div className="flex flex-col  lg:gap-12 gap-8 min-w[450px]">
+      <div className="min-w[450px] flex  flex-col gap-8 lg:gap-12">
         {/* Upper part */}
-        <div className="flex bg-lighBlue text-textSaleBlue font-semibold rounded-md w-28 h-10 items-center justify-center ">
+        <div className="flex h-10 w-28 items-center justify-center rounded-md bg-lighBlue font-semibold text-textSaleBlue ">
           Sale 70%
         </div>
-        <div className="text-textBlack font-bold lg:text-6xl text-5xl tracking-wide ">
+        <div className="text-5xl font-bold tracking-wide text-textBlack lg:text-6xl ">
           An Industrial Take on Streetwear
         </div>
-        <div className="text-textGrey font-normal text-base ">
+        <div className="text-base font-normal text-textGrey ">
           Anyone can beat you but no one can beat your outfit as long as you
           wear Dine outfits.
         </div>
         {/* Black Button */}
-        <div className="flex text-base font-semibold min-w-[160px] lg:w-2/6 w-4/5 p-4 bg-blackButton text-white items-center justify-center border-l-2 border-t-2 border-textGrey">
+        <div className="flex w-4/5 min-w-[160px] items-center justify-center border-l-2 border-t-2 border-textGrey bg-blackButton p-4 text-base font-semibold text-white lg:w-2/6">
           <button className="flex flex-row items-center justify-center">
             <svg
               className="pr-1"
@@ -49,7 +64,7 @@ export default function Hero2() {
           </button>
         </div>
         {/* Lower logo part */}
-        <div className="grid lg:grid-cols-4 grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           <Image
             src={"/Featured1.webp"}
             alt="HeroSection Featured1"
@@ -78,12 +93,12 @@ export default function Hero2() {
       </div>
 
       {/* Right Div */}
-      <div className="overflow-hidden hidden lg:block">
+      <div className="hidden overflow-hidden lg:block">
         {/* Circle */}
-        <div className="w-[600px] h-[600px] bg-circleCream rounded-[50%] relative mr-32 ">
+        <div className="relative mr-32 h-[600px] w-[600px] rounded-[50%] bg-circleCream ">
           <Image
             className="absolute"
-            src={"/header.webp"}
+            src={urlForImage(data[0].image).url()}
             alt="HeroSection Girl"
             height={"650"}
             width={"650"}

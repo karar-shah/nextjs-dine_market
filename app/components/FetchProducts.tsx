@@ -14,7 +14,7 @@ interface IProducts {
 
 export default async function FetchProducts() {
   const data: IProducts[] = await getProductData();
-  console.log(data);
+  // console.log(data);
   return (
     <>
       {data.map((items) => (

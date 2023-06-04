@@ -8,36 +8,17 @@ import Products from "./components/Products";
 import Promotions from "./components/Promotions";
 import { client } from "./lib/sanityClient";
 
-export const getProductData = async () => {
-  const res = await client.fetch(
-    `*[_type=="product" && _id=="b704ea69-06bc-4d1b-b303-146f5a8378ab"]`
-  );
-  return res;
-};
-
-interface IProducts {
-  title: string;
-  price: string;
-}
-
 export default async function Home() {
-  const data: IProducts[] = await getProductData();
-  console.log(data);
   return (
     <div>
       <Nav />
-      {data.map((items) => (
-        <div key={items.title}>
-          <div>Page.tsx</div>
-          <div>{items.title}</div>
-          <div>{items.price}</div>
-        </div>
-      ))}
+      {/* <FetchProducts /> */}
       {/* @ts-expect-error Server Component */}
-      <FetchProducts />
       <Hero2 />
+      {/* @ts-expect-error Server Component */}
       <Promotions />
       <Products />
+      {/* @ts-expect-error Server Component */}
       <Features />
       <NewsLetter />
       <Footer />

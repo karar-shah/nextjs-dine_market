@@ -1,7 +1,22 @@
 import Image from "next/image";
-import React from "react";
+import { client } from "../lib/sanityClient";
+import { Image as Iimage } from "sanity";
+import { urlForImage } from "@/sanity/lib/image";
 
-export default function Features() {
+export const getProductData = async () => {
+  const res = await client.fetch(
+    `*[_type=="product" && title=="Feature r1"]{image}`
+  );
+  return res;
+};
+
+interface IProducts {
+  image: Iimage;
+}
+
+export default async function Features() {
+  const data: IProducts[] = await getProductData();
+
   return (
     <>
       <div className="px-8 py-8 md:px-16 lg:px-32">
@@ -58,7 +73,7 @@ export default function Features() {
           {/* right/bottom part */}
           <div className="flex flex-col gap-4 md:flex-row md:gap-12">
             <Image
-              src={"/feature.webp"}
+              src={urlForImage(data[0].image).url()}
               height={350}
               width={300}
               alt="feature"
