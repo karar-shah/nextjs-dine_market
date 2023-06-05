@@ -14,9 +14,10 @@ export default async function Home() {
       <Nav />
       {/* <FetchProducts /> */}
       {/* @ts-expect-error Server Component */}
-      <Hero2 />
+      <Hero2 data1="!!!!!!!!!!!!!!new" />
       {/* @ts-expect-error Server Component */}
       <Promotions />
+      {/* @ts-expect-error Server Component */}
       <Products />
       {/* @ts-expect-error Server Component */}
       <Features />

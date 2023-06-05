@@ -2,6 +2,7 @@ import Image from "next/image";
 import { client } from "../lib/sanityClient";
 import { Image as Iimage } from "sanity";
 import { urlForImage } from "@/sanity/lib/image";
+import { GetServerSideProps, NextPage } from "next";
 
 export const getProductData = async () => {
   const res = await client.fetch(
@@ -14,8 +15,10 @@ interface IProducts {
   image: Iimage;
 }
 
-export default async function Hero2() {
+export default async function Hero2({ data1 }: any) {
   const data: IProducts[] = await getProductData();
+  console.log(data1);
+  console.log(urlForImage(data[0].image).url());
 
   return (
     <header className="relative mx-8 flex gap-16 pt-8 lg:my-16 lg:ml-16 lg:mr-0 xl:ml-32 ">
@@ -102,6 +105,8 @@ export default async function Hero2() {
             alt="HeroSection Girl"
             height={"650"}
             width={"650"}
+            quality={75}
+            priority={true}
           />
         </div>
       </div>
