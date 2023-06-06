@@ -1,8 +1,12 @@
 import Image from "next/image";
 import { urlForImage } from "@/sanity/lib/image";
-import { IimageHome } from "../interface/interface";
+import { Image as Iimage } from "sanity";
 
-export default function Hero2({ imageData }: { imageData: IimageHome }) {
+export default function Hero2({
+  imageData,
+}: {
+  imageData: Iimage | undefined;
+}) {
   return (
     <header className="relative mx-8 flex gap-16 pt-8 lg:my-16 lg:ml-16 lg:mr-0 xl:ml-32 ">
       {/* Left Div */}
@@ -84,7 +88,7 @@ export default function Hero2({ imageData }: { imageData: IimageHome }) {
         <div className="relative mr-32 h-[600px] w-[600px] rounded-[50%] bg-circleCream ">
           <Image
             className="absolute"
-            src={urlForImage(imageData.image).url()}
+            src={imageData ? urlForImage(imageData).url() : ""}
             alt="HeroSection Girl"
             height={"650"}
             width={"650"}

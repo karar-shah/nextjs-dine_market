@@ -1,8 +1,12 @@
 import Image from "next/image";
 import { urlForImage } from "@/sanity/lib/image";
-import { IProducts } from "../interface/interface";
+import { Image as Iimage } from "sanity";
 
-export default function Promotions({ imageData }: { imageData: IProducts[] }) {
+export default function Promotions({
+  imageData,
+}: {
+  imageData: (Iimage | undefined)[];
+}) {
   return (
     <>
       <div className="px-8 py-16 lg:px-16 xl:px-32">
@@ -28,10 +32,12 @@ export default function Promotions({ imageData }: { imageData: IProducts[] }) {
                 </div>
               </div>
               <Image
-                src={urlForImage(imageData[0].image).url()}
+                src={imageData[0] ? urlForImage(imageData[0]).url() : ""}
                 height={250}
                 width={250}
                 alt="Promotion 1"
+                quality={100}
+                priority={true}
               />
             </div>
           </div>
@@ -58,11 +64,13 @@ export default function Promotions({ imageData }: { imageData: IProducts[] }) {
             </div>
             <div className="flex justify-center">
               <Image
-                src={urlForImage(imageData[1].image).url()}
+                src={imageData[1] ? urlForImage(imageData[1]).url() : ""}
                 height={250}
                 width={250}
                 alt="Flex sweatshirt"
                 className="xl:absolute xl:bottom-0"
+                quality={100}
+                priority={true}
               />
             </div>
           </div>
@@ -77,11 +85,13 @@ export default function Promotions({ imageData }: { imageData: IProducts[] }) {
             </div>
             <div className="flex justify-center">
               <Image
-                src={urlForImage(imageData[2].image).url()}
+                src={imageData[2] ? urlForImage(imageData[2]).url() : ""}
                 height={250}
                 width={250}
                 className="xl:absolute xl:bottom-0"
                 alt="Flex sweatshirt"
+                quality={100}
+                priority={true}
               />
             </div>
           </div>

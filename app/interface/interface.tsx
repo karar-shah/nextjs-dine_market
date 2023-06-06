@@ -5,6 +5,8 @@ export interface IProducts {
   image: Iimage;
 }
 
-export interface IimageHome {
+export interface IProductsDetail {
+  title: string;
+  price: string;
   image: Iimage;
 }

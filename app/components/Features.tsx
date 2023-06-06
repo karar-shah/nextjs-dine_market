@@ -4,7 +4,11 @@ import { Image as Iimage } from "sanity";
 import { urlForImage } from "@/sanity/lib/image";
 import { IProducts } from "../interface/interface";
 
-export default function Features({ imageData }: { imageData: IProducts }) {
+export default function Features({
+  imageData,
+}: {
+  imageData: Iimage | undefined;
+}) {
   return (
     <>
       <div className="px-8 py-8 md:px-16 lg:px-32">
@@ -61,7 +65,7 @@ export default function Features({ imageData }: { imageData: IProducts }) {
           {/* right/bottom part */}
           <div className="flex flex-col gap-4 md:flex-row md:gap-12">
             <Image
-              src={urlForImage(imageData.image).url()}
+              src={imageData ? urlForImage(imageData).url() : ""}
               height={350}
               width={300}
               alt="feature"
