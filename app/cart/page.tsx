@@ -7,9 +7,9 @@ export default function page() {
       <div className="px-8 lg:px-32">
         <h1 className="mb-8 text-3xl font-bold">Shopping Cart</h1>
         {/* Cart Box */}
-        <div className="flex flex-col gap-4 lg:flex-row">
+        <div className="flex flex-col gap-4 lg:flex-row ">
           {/* product image and summary container */}
-          <div className="flex flex-col gap-4 md:flex-row">
+          <div className="flex flex-col gap-4 md:flex-row  lg:w-2/3 lg:gap-8">
             {/* image */}
             <div>
               <Image
@@ -90,7 +90,7 @@ export default function page() {
             </div>
           </div>
           {/* summary */}
-          <div className="flex flex-col gap-6 p-8">
+          <div className="flex flex-col gap-6 p-8 lg:gap-8 lg:pt-0">
             <h2 className="text-xl font-bold">Order Summary</h2>
             <div className="flex justify-between">
               <div>Quantity</div>
