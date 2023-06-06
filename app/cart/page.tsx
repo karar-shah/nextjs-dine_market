@@ -7,9 +7,9 @@ export default function page() {
       <div className="px-8 lg:px-32">
         <h1 className="mb-8 text-3xl font-bold">Shopping Cart</h1>
         {/* Cart Box */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 lg:flex-row">
           {/* product image and summary container */}
-          <div className="">
+          <div className="flex flex-col gap-4 md:flex-row">
             {/* image */}
             <div>
               <Image
@@ -21,8 +21,8 @@ export default function page() {
               />
             </div>
             {/* product details */}
-            <div>
-              <div className="flex justify-between pt-8">
+            <div className="flex flex-grow flex-col md:gap-4">
+              <div className="flex justify-between pt-8 md:pt-0">
                 <div className="text-2xl font-light">
                   Brushed Raglan Sweatshirt
                 </div>
