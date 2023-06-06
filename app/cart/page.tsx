@@ -22,11 +22,12 @@ export default function page() {
             </div>
             {/* product details */}
             <div>
-              <div className="flex pt-8">
+              <div className="flex justify-between pt-8">
                 <div className="text-2xl font-light">
                   Brushed Raglan Sweatshirt
                 </div>
-                <div className="ml-auto flex">
+                {/* Delete icon */}
+                <div className="">
                   <svg
                     stroke="currentColor"
                     fill="none"
@@ -45,11 +46,13 @@ export default function page() {
                   </svg>
                 </div>
               </div>
-              <div>Dress</div>
-              <div>Delivery Estimateion</div>
-              <div>5 Working days</div>
+              <div className="py-2 font-semibold text-gray-700">Dress</div>
+              <div className="font-semibold">Delivery Estimateion</div>
+              <div className="py-2 font-semibold text-yellow-500">
+                5 Working days
+              </div>
               <div className="flex">
-                <div className="text-2xl font-light">$195</div>
+                <div className="text-xl font-semibold">$195</div>
                 <div className="ml-auto flex items-center gap-4">
                   {/* Minus */}
                   <svg
@@ -87,7 +90,23 @@ export default function page() {
             </div>
           </div>
           {/* summary */}
-          <div></div>
+          <div className="flex flex-col gap-6 p-8">
+            <h2 className="text-xl font-bold">Order Summary</h2>
+            <div className="flex justify-between">
+              <div>Quantity</div>
+              <div>1 Product</div>
+            </div>
+            <div className="flex justify-between">
+              <div>Subtotal</div>
+              <div>$195</div>
+            </div>
+            <button
+              type="submit"
+              className="border-l-2 border-t-2 border-textGrey bg-blackButton px-10 py-3 text-sm font-semibold text-white"
+            >
+              Proceed to Checkout
+            </button>
+          </div>
         </div>
       </div>
     </>
