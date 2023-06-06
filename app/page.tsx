@@ -6,6 +6,7 @@ import Promotions from "./components/Promotions";
 import { client } from "./lib/sanityClient";
 import { Image as Iimage } from "sanity";
 import { IProducts, IProductsDetail } from "./interface/interface";
+import React from "react";
 
 export const getProductData = async (graqQury: string) => {
   const res = await client.fetch(graqQury);
@@ -30,7 +31,6 @@ export default async function Home() {
   );
   return (
     <div>
-      <Nav />
       <Hero2 imageData={findImage(data, "Hero r1")} />
       <Promotions
         imageData={[
