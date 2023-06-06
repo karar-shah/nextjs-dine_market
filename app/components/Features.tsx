@@ -2,21 +2,9 @@ import Image from "next/image";
 import { client } from "../lib/sanityClient";
 import { Image as Iimage } from "sanity";
 import { urlForImage } from "@/sanity/lib/image";
+import { IProducts } from "../interface/interface";
 
-export const getProductData = async () => {
-  const res = await client.fetch(
-    `*[_type=="staticImage" && title=="Feature r1"]{image}`
-  );
-  return res;
-};
-
-interface IProducts {
-  image: Iimage;
-}
-
-export default async function Features() {
-  const data: IProducts[] = await getProductData();
-
+export default function Features({ imageData }: { imageData: IProducts }) {
   return (
     <>
       <div className="px-8 py-8 md:px-16 lg:px-32">
@@ -73,11 +61,12 @@ export default async function Features() {
           {/* right/bottom part */}
           <div className="flex flex-col gap-4 md:flex-row md:gap-12">
             <Image
-              src={urlForImage(data[0].image).url()}
+              src={urlForImage(imageData.image).url()}
               height={350}
               width={300}
               alt="feature"
               className="h-full w-full object-cover"
+              quality={100}
             />
             <div>
               <div className="my-8 text-justify font-light tracking-wide text-gray-800 xl:max-w-md">

@@ -1,25 +1,8 @@
 import Image from "next/image";
-import { client } from "../lib/sanityClient";
-import { Image as Iimage } from "sanity";
 import { urlForImage } from "@/sanity/lib/image";
-import { GetServerSideProps, NextPage } from "next";
+import { IimageHome } from "../interface/interface";
 
-export const getProductData = async () => {
-  const res = await client.fetch(
-    `*[_type=="staticImage" && title=="Hero r1"]{image}`
-  );
-  return res;
-};
-
-interface IProducts {
-  image: Iimage;
-}
-
-export default async function Hero2({ data1 }: any) {
-  const data: IProducts[] = await getProductData();
-  console.log(data1);
-  console.log(urlForImage(data[0].image).url());
-
+export default function Hero2({ imageData }: { imageData: IimageHome }) {
   return (
     <header className="relative mx-8 flex gap-16 pt-8 lg:my-16 lg:ml-16 lg:mr-0 xl:ml-32 ">
       {/* Left Div */}
@@ -101,11 +84,11 @@ export default async function Hero2({ data1 }: any) {
         <div className="relative mr-32 h-[600px] w-[600px] rounded-[50%] bg-circleCream ">
           <Image
             className="absolute"
-            src={urlForImage(data[0].image).url()}
+            src={urlForImage(imageData.image).url()}
             alt="HeroSection Girl"
             height={"650"}
             width={"650"}
-            quality={75}
+            quality={100}
             priority={true}
           />
         </div>

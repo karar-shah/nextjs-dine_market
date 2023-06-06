@@ -1,22 +1,8 @@
 import Image from "next/image";
-import { client } from "../lib/sanityClient";
-import { Image as Iimage } from "sanity";
 import { urlForImage } from "@/sanity/lib/image";
+import { IProducts } from "../interface/interface";
 
-export const getProductData = async () => {
-  const res = await client.fetch(
-    `*[_type=="staticImage" && title=="Promotion l1" || title == "Promotion r1" || title == "Promotion r2"]{image}`
-  );
-  return res;
-};
-
-interface IProducts {
-  image: Iimage;
-}
-
-export default async function Promotions() {
-  const data: IProducts[] = await getProductData();
-
+export default function Promotions({ imageData }: { imageData: IProducts[] }) {
   return (
     <>
       <div className="px-8 py-16 lg:px-16 xl:px-32">
@@ -42,7 +28,7 @@ export default async function Promotions() {
                 </div>
               </div>
               <Image
-                src={urlForImage(data[2].image).url()}
+                src={urlForImage(imageData[0].image).url()}
                 height={250}
                 width={250}
                 alt="Promotion 1"
@@ -72,7 +58,7 @@ export default async function Promotions() {
             </div>
             <div className="flex justify-center">
               <Image
-                src={urlForImage(data[1].image).url()}
+                src={urlForImage(imageData[1].image).url()}
                 height={250}
                 width={250}
                 alt="Flex sweatshirt"
@@ -91,7 +77,7 @@ export default async function Promotions() {
             </div>
             <div className="flex justify-center">
               <Image
-                src={urlForImage(data[0].image).url()}
+                src={urlForImage(imageData[2].image).url()}
                 height={250}
                 width={250}
                 className="xl:absolute xl:bottom-0"
