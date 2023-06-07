@@ -1,6 +1,7 @@
 import Features from "./components/Features";
 import Hero2 from "./components/Hero2";
 import NewsLetter from "./components/NewsLetter";
+import ProductCard from "./components/ProductCard";
 import Products from "./components/Products";
 import Promotions from "./components/Promotions";
 import { getProductData1, findImage } from "./interface/fetchFunction";
@@ -17,6 +18,7 @@ export default async function Home() {
   );
   return (
     <div>
+      <ProductCard item={data[0]} />
       <Hero2 imageData={findImage(data, "Hero r1")} />
       <Promotions
         imageData={[
