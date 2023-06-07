@@ -1,36 +1,49 @@
-"use client";
 import React from "react";
+import Link from "next/link";
 import Nav from "../components/Nav";
 import { client } from "../lib/sanityClient";
 import { urlForImage } from "@/sanity/lib/image";
 import { IProductsDetail } from "../interface/interface";
-import { useRouter } from "next/navigation";
 
-const getAllProudctsData = async () => {
+const getAllProductsData = async () => {
   const res = await client.fetch(`*[_type=="product"]{title,image,price}`);
   return res;
 };
 
-export default async function page() {
-  const router = useRouter();
-  const data = await getAllProudctsData();
-  // console.log(data);
-
+export default async function Page() {
+  const data: IProductsDetail[] = await getAllProductsData();
   return (
     <>
-      {/* <p>Post: {router.query.slug}</p>; */}
-      <button type="button" onClick={() => router.push("/products/fghj")}>
-        Dashboard
-      </button>
+      <Link href="/products/[title]" as={`/products/fghj`}>
+        <button type="button">Dashboard</button>
+      </Link>
       <div>
         {data.map((item: IProductsDetail) => (
-          <div key={item.title}>
+          <Link
+            key={item.title}
+            href={{
+              pathname: `/products/${item.title}`,
+              query: { title: item.title },
+            }}
+            // href="/products/[title]"
+            // as={`/products/${item.title}`}
+            // as={`/products/${encodeURIComponent(item.title)}`}
+          >
             <div>{item.title}</div>
             <div>{item.price}</div>
             <img src={urlForImage(item.image).url()} alt={item.title} />
-          </div>
+          </Link>
         ))}
       </div>
     </>
   );
 }
+
+// export async function getStaticProps() {
+
+//   return {
+//     props: {
+//       data,
+//     },
+//   };
+// }
