@@ -3,30 +3,16 @@ import Hero2 from "./components/Hero2";
 import NewsLetter from "./components/NewsLetter";
 import Products from "./components/Products";
 import Promotions from "./components/Promotions";
-import { client } from "./lib/sanityClient";
-import { Image as Iimage } from "sanity";
+import { getProductData1, findImage } from "./interface/fetchFunction";
 import { IProducts, IProductsDetail } from "./interface/interface";
 import React from "react";
 
-export const getProductData = async (graqQury: string) => {
-  const res = await client.fetch(graqQury);
-  return res;
-};
-
-const findImage = (data: IProducts[], title: string): Iimage | undefined => {
-  for (const element of data) {
-    if (element.title === title) {
-      return element.image;
-    }
-  }
-};
-
 export default async function Home() {
   2;
-  const data: IProducts[] = await getProductData(
+  const data: IProducts[] = await getProductData1(
     `*[_type=="staticImage"]{title,image}`
   );
-  const dataProducts: IProductsDetail[] = await getProductData(
+  const dataProducts: IProductsDetail[] = await getProductData1(
     `*[_type=="product"]{title,price,image}`
   );
   return (
