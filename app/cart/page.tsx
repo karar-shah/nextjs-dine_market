@@ -13,7 +13,7 @@ export default function page() {
             {/* image */}
             <div>
               <Image
-                src={"/product1.png"}
+                src={"/Featured1.webp"}
                 height={300}
                 width={250}
                 alt="product"
@@ -31,16 +31,16 @@ export default function page() {
                   <svg
                     stroke="currentColor"
                     fill="none"
-                    stroke-width="0"
+                    strokeWidth="0"
                     viewBox="0 0 24 24"
                     height="28"
                     width="28"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                     ></path>
                   </svg>
@@ -58,7 +58,7 @@ export default function page() {
                   <svg
                     stroke="currentColor"
                     fill="currentColor"
-                    stroke-width="0"
+                    strokeWidth="0"
                     viewBox="0 0 1024 1024"
                     height="1em"
                     width="1em"
@@ -72,8 +72,8 @@ export default function page() {
                     <svg
                       stroke="currentColor"
                       fill="currentColor"
-                      stroke-width="0"
-                      t="1551322312294"
+                      strokeWidth="0"
+                      // t="1551322312294"
                       viewBox="0 0 1024 1024"
                       version="1.1"
                       height="1em"
