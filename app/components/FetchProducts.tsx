@@ -1,11 +1,11 @@
 import { client } from "../lib/sanityClient";
-
-export const getProductData = async () => {
-  const res = await client.fetch(
-    `*[_type=="product" && _id=="b704ea69-06bc-4d1b-b303-146f5a8378ab"]`
-  );
-  return res;
-};
+import { getProductData1 } from "../interface/fetchFunction";
+// export const getProductData = async () => {
+//   const res = await client.fetch(
+//     `*[_type=="product" && _id=="b704ea69-06bc-4d1b-b303-146f5a8378ab"]`
+//   );
+//   return res;
+// };
 
 interface IProducts {
   title: string;
@@ -13,7 +13,9 @@ interface IProducts {
 }
 
 export default async function FetchProducts() {
-  const data: IProducts[] = await getProductData();
+  const data: IProducts[] = await getProductData1(
+    `*[_type=="product" && _id=="b704ea69-06bc-4d1b-b303-146f5a8378ab"]`
+  );
   // console.log(data);
   return (
     <>
