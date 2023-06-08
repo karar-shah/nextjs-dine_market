@@ -21,12 +21,12 @@ export default async function Page() {
         {data.map((item: IProductsDetail) => (
           <Link
             key={item.title}
-            href={{
-              pathname: `/products/${item.title}`,
-              query: { title: item.title },
-            }}
+            // href={{
+            //   pathname: `/products/${item.title}`,
+            //   query: item.title,
+            // }}
             // href="/products/[title]"
-            // as={`/products/${item.title}`}
+            href={`/products/${item.title}`}
             // as={`/products/${encodeURIComponent(item.title)}`}
           >
             <div>{item.title}</div>
