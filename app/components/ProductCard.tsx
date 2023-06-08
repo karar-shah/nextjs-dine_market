@@ -1,7 +1,6 @@
 "use client";
 
 export default function ProductCard({ item }: any) {
-  // console.log(item);
   const handleAddToCart = async () => {
     const res = await fetch("/api/cart", {
       method: "POST",
