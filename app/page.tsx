@@ -18,7 +18,7 @@ export default async function Home() {
   );
   return (
     <div>
-      <ProductCard item={data[0]} />
+      {/* <ProductCard item={data[0]} /> */}
       <Hero2 imageData={findImage(data, "Hero r1")} />
       <Promotions
         imageData={[
