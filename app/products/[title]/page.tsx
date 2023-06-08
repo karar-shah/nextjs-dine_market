@@ -1,4 +1,3 @@
-"use client";
 import { IProductsDetail } from "@/app/interface/interface";
 import { getProductData1 } from "@/app/interface/fetchFunction";
 import { urlForImage } from "@/sanity/lib/image";
