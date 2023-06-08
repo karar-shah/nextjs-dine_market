@@ -42,24 +42,7 @@ export default function Quantity_Size_AddCart({
     }`;
   };
   return (
-    <div>
-      <div className="flex items-center gap-8 ">
-        <div className="text-base font-bold leading-4 tracking-wider text-textBlack">
-          Quantity
-        </div>
-        <div className="flex items-center gap-1">
-          <button onClick={handleDecrement} className="mr-2 cursor-pointer">
-            -
-          </button>
-          <span>{quantity}</span>
-          <button
-            onClick={handleIncrement}
-            className="ml-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 border-textBlack"
-          >
-            +
-          </button>
-        </div>
-      </div>
+    <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-3 ">
         <div className="text-sm font-bold leading-4 tracking-wider text-textBlack">
           SELECT SIZE
@@ -94,6 +77,23 @@ export default function Quantity_Size_AddCart({
             className={getButtonClassName("XL")}
           >
             XL
+          </button>
+        </div>
+      </div>
+      <div className="flex items-center gap-8 ">
+        <div className="text-base font-bold leading-4 tracking-wider text-textBlack">
+          Quantity
+        </div>
+        <div className="flex items-center gap-1">
+          <button onClick={handleDecrement} className="mr-2 cursor-pointer">
+            -
+          </button>
+          <span>{quantity}</span>
+          <button
+            onClick={handleIncrement}
+            className="ml-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 border-textBlack"
+          >
+            +
           </button>
         </div>
       </div>

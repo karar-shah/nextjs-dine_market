@@ -42,7 +42,7 @@ export default async function ProductPage({
                   <div className="text-2xl font-normal leading-8 tracking-wider text-textBlack lg:text-3xl">
                     {data[0].title}
                   </div>
-                  <div className="text-xl font-semibold opacity-30">
+                  <div className="pt-1 text-xl font-semibold opacity-30">
                     Product Category
                   </div>
                 </div>
