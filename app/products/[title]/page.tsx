@@ -23,15 +23,48 @@ export default async function ProductPage({
     <>
       {data && (
         <>
-          <div className="py-16 lg:px-32">
-            <div className="relative flex ">
-              <div className="relative w-1/2 overflow-hidden">
-                <div className="aspect-w-15 aspect-h-16 max-h-full max-w-full">
+          <div className="p-8 lg:px-16 xl:px-32">
+            <div className="flex flex-col justify-between  gap-8 sm:items-start lg:flex-row lg:items-center">
+              {/* Left Div */}
+              <div className="flex gap-8">
+                {/* Other Images */}
+                <div className="flex flex-col gap-4">
+                  <div className="relative h-[50px] w-[50px] md:h-[100px] md:w-[100px]">
+                    <Image
+                      src={urlForImage(data[0].image).url()}
+                      alt={data[0].title}
+                      fill={true}
+                    />
+                  </div>
+                  <div className="relative h-[50px] w-[50px] md:h-[100px] md:w-[100px]">
+                    <Image
+                      src={urlForImage(data[0].image).url()}
+                      alt={data[0].title}
+                      fill={true}
+                    />
+                  </div>
+                  <div className="relative h-[50px] w-[50px] md:h-[100px] md:w-[100px]">
+                    <Image
+                      src={urlForImage(data[0].image).url()}
+                      alt={data[0].title}
+                      fill={true}
+                    />
+                  </div>
+                  <div className="relative h-[50px] w-[50px] md:h-[100px] md:w-[100px]">
+                    <Image
+                      src={urlForImage(data[0].image).url()}
+                      alt={data[0].title}
+                      fill={true}
+                    />
+                  </div>
+                </div>
+                {/* Product Image */}
+                <div className="relative h-[270px] w-[250px] md:h-[460px] md:w-[460px] ">
                   <Image
                     src={urlForImage(data[0].image).url()}
                     alt={data[0].title}
                     fill={true}
-                    className="h-auto w-auto object-contain object-center"
+                    className=""
                     quality={100}
                   />
                 </div>

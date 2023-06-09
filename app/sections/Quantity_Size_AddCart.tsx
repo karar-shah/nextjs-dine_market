@@ -9,47 +9,52 @@ export default function Quantity_Size_AddCart({
 }: {
   params: IProductsDetail;
 }) {
+  // Sending product to DB
   const handleAddToCart = async () => {
     const res = await fetch("/api/cart", {
       method: "POST",
       body: JSON.stringify({
         product_id: params.title,
+        quantity: user_quantity,
+        size: user_size,
       }),
     });
     const result = await res.json();
     toast(`${params.title} added to cart`);
-    console.log(result);
   };
 
-  // Quantity State
-  const [quantity, setquantity] = useState(1);
+  // User Quantity State
+  const [user_quantity, setquantity] = useState(1);
   const handleDecrement = () => {
-    if (quantity > 0) {
-      setquantity(quantity - 1);
+    if (user_quantity > 0) {
+      setquantity(user_quantity - 1);
     }
   };
   const handleIncrement = () => {
-    if (quantity < 5) {
-      setquantity(quantity + 1);
+    if (user_quantity < 5) {
+      setquantity(user_quantity + 1);
     }
   };
-  // Size State
-  const [size, setSize] = useState("M");
+  // User Size State
+  const [user_size, setSize] = useState("M");
   const handleSize = (sizeVal: string) => {
     setSize(sizeVal);
   };
   // Selected Size CSS
   const getButtonClassName = (buttonSize: string) => {
     return `min-w-[23px] cursor-pointer rounded-full p-[1px] text-center text-base font-bold text-textGrey hover:shadow-lg hover:shadow-gray-400 ${
-      size === buttonSize ? "shadow-xl shadow-gray-500" : ""
+      user_size === buttonSize ? "shadow-xl shadow-gray-500" : ""
     }`;
   };
   return (
     <>
       <ToastContainer
         position="top-center"
-        autoClose={2000}
+        autoClose={4000}
         closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
         rtl={false}
         theme="light"
       />
@@ -99,7 +104,7 @@ export default function Quantity_Size_AddCart({
             <button onClick={handleDecrement} className="mr-2 cursor-pointer">
               -
             </button>
-            <span>{quantity}</span>
+            <span>{user_quantity}</span>
             <button
               onClick={handleIncrement}
               className="ml-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 border-textBlack"
@@ -142,7 +147,7 @@ export default function Quantity_Size_AddCart({
               <div className="text-center">Add to Cart</div>
             </button>
           </div>
-          <div className="min-w-[100px] text-2xl font-bold text-textBlack">{`$ ${params.price}.00`}</div>
+          <div className="min-w-[120px] text-2xl font-bold text-textBlack">{`$ ${params.price}.00`}</div>
         </div>
       </div>
     </>

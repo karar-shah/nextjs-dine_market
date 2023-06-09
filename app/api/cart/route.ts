@@ -3,6 +3,7 @@ import { cartTable, db } from "@/app/lib/drizzle";
 import { v4 } from "uuid";
 import { cookies } from "next/dist/client/components/headers";
 
+// GET REQUEST
 export const GET = async (request: Request) => {
   try {
     const res = await db.select().from(cartTable);
@@ -13,6 +14,7 @@ export const GET = async (request: Request) => {
   }
 };
 
+// POST REQUEST
 export const POST = async (request: Request) => {
   const req = await request.json();
   console.log("######", req);
@@ -29,7 +31,8 @@ export const POST = async (request: Request) => {
       .insert(cartTable)
       .values({
         product_id: req.product_id,
-        quantity: 1,
+        quantity: req.quantity,
+        size: req.size,
         user_id: cookies().get("user_id")?.value as string,
       })
       .returning();

@@ -73,7 +73,6 @@ export default function page() {
                       stroke="currentColor"
                       fill="currentColor"
                       strokeWidth="0"
-                      // t="1551322312294"
                       viewBox="0 0 1024 1024"
                       version="1.1"
                       height="1em"
