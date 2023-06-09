@@ -23,19 +23,20 @@ export default async function ProductPage({
     <>
       {data && (
         <>
-          <div className="px-32 py-16">
-            <div className="relative flex justify-around">
+          <div className="py-16 lg:px-32">
+            <div className="relative flex ">
               <div className="relative w-1/2 overflow-hidden">
                 <div className="aspect-w-15 aspect-h-16 max-h-full max-w-full">
                   <Image
                     src={urlForImage(data[0].image).url()}
                     alt={data[0].title}
                     fill={true}
-                    className="h-full w-full object-contain object-center"
+                    className="h-auto w-auto object-contain object-center"
                     quality={100}
                   />
                 </div>
               </div>
+              {/* Text and cart button area */}
               <div className="flex flex-col gap-10">
                 <div>
                   <div className="text-2xl font-normal leading-8 tracking-wider text-textBlack lg:text-3xl">
