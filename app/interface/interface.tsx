@@ -10,3 +10,15 @@ export interface IProductsDetail {
   price: string;
   image: Iimage;
 }
+
+export interface CartItem {
+  id: number;
+  user_id: string;
+  product_id: string;
+  quantity: number;
+  size: string;
+}
+
+export interface ErrorResponse {
+  message: string;
+}

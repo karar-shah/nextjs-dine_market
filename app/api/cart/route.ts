@@ -2,20 +2,30 @@ import { NextRequest, NextResponse } from "next/server";
 import { cartTable, db } from "@/app/lib/drizzle";
 import { v4 } from "uuid";
 import { cookies } from "next/dist/client/components/headers";
+import { eq } from "drizzle-orm";
 
 // GET REQUEST
-export const GET = async (request: Request) => {
-  try {
-    const res = await db.select().from(cartTable);
-    return NextResponse.json({ res });
-  } catch (error) {
-    console.log(error);
-    return NextResponse.json({ message: "Some wrong in GET request" });
+export const GET = async (request: NextRequest) => {
+  const uid = cookies().get("user_id")?.value;
+  console.log(uid);
+  if (uid) {
+    try {
+      const res = await db
+        .select()
+        .from(cartTable)
+        .where(eq(cartTable.user_id, uid));
+      return NextResponse.json({ res });
+    } catch (error) {
+      console.log(error);
+      return NextResponse.json({ message: "Some wrong in GET request" });
+    }
+  } else {
+    return NextResponse.json({ message: "no record found" });
   }
 };
 
 // POST REQUEST
-export const POST = async (request: Request) => {
+export const POST = async (request: NextRequest) => {
   const req = await request.json();
   console.log("######", req);
   const uid = v4();
