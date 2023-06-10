@@ -19,7 +19,7 @@ export default async function Page() {
           <Link
             key={item.title}
             href={`/products/${item.title}`}
-            className="ml-5 md:ml-0"
+            className="mx-auto"
           >
             <div className="relative h-[300px] w-[280px] md:h-[270px] md:w-[250px]">
               <Image

@@ -1,22 +1,32 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import { IProductsDetail } from "../interface/interface";
-import { getProductData1 } from "../interface/fetchFunction";
+import { cookies } from "next/dist/client/components/headers";
 
 export default async function NavCart() {
-  // Sending product to DB
-  // const handleAddToCart = async () => {
-  //   const res = await fetch("/api/cart", {
-  //     method: "GET",
-  //   });
-  //   const result = await res.json();
-  //   console.log("!!!!!", result);
-  // };
-  // console.log(await handleAddToCart());
+  // GET product from DB
+  const handleCartData = async () => {
+    // If user_id in browser cookie
+    // const uid = cookies().get("user_id");
+    // console.log(uid);
+    // let uidPresent: boolean;
+    // if (typeof uid === "string") {
+    //   uidPresent = true;
+    //   const res = await fetch(
+    //     `/api/cart?user_id=0391bc2c-6837-400f-bc0f-818a5e8103b3`,
+    //     { method: "GET" }
+    //   );
+    //   const result = await res.json();
+    //   console.log(result);
+    // } else {
+    //   uidPresent = false;
+    // }
+    // const res = await fetch(`/api/cart`, { method: "GET" });
+    // const result = await res.json();
+  };
   return (
     <div>
-      <Link href="/cart">
+      <Link onClick={handleCartData} href="/cart">
         <button
           // onClick={handleAddToCart}
           className="relative rounded-full bg-gray-200 p-3"

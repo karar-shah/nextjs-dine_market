@@ -1,9 +1,16 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 
-export default function page() {
+export default async function page() {
+  const res = await fetch(`/api/cart`, { method: "GET" });
+  const result = await res.json();
+  if (result) {
+    console.log("yesyesyeseys");
+  }
   return (
     <>
+      {}
       <div className="px-8 lg:px-32">
         <h1 className="mb-8 text-3xl font-bold">Shopping Cart</h1>
         {/* Cart Box */}

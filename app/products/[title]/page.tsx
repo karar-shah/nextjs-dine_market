@@ -2,13 +2,9 @@ import { IProductsDetail } from "@/app/interface/interface";
 import { getProductData1 } from "@/app/interface/fetchFunction";
 import { urlForImage } from "@/sanity/lib/image";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import Quantity_Size_AddCart from "@/app/sections/Quantity_Size_AddCart";
 
-// export const getProductData = async (graqQury: string) => {
-//   const res = await client.fetch(graqQury);
-//   return res;
-// };
 export default async function ProductPage({
   params,
 }: {
