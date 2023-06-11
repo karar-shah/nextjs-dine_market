@@ -36,6 +36,12 @@ const cartSlice = createSlice({
           totalPrice,
         });
         console.log("existingItem", existingItem);
+      } else {
+        const totalPrice =
+          existingItem.totalPrice +
+          existingItem.totalPrice * action.payload.quantity;
+        existingItem.quantity += action.payload.quantity;
+        existingItem.totalPrice = totalPrice;
       }
       console.log("newItem", newItem);
       console.log("cartSlice", state.items);

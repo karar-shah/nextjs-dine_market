@@ -12,21 +12,38 @@ export default function Quantity_Size_AddCart({
 }: {
   params: IProductsDetail;
 }) {
+  // const [productQuantity, setProductQuantity] = useState<number>(0);
+  // User Size State
+  const [user_size, setSize] = useState("M");
+  const handleSize = (sizeVal: string) => {
+    setSize(sizeVal);
+  };
+  // Selected Size CSS
+  const getButtonClassName = (buttonSize: string) => {
+    return `min-w-[23px] cursor-pointer rounded-full p-[1px] text-center text-base font-bold text-textGrey hover:shadow-lg hover:shadow-gray-400 ${
+      user_size === buttonSize ? "shadow-xl shadow-gray-500" : ""
+    }`;
+  };
+  // Redux Part
   const dispatch = useDispatch();
   // Get all items
-  const items = useSelector((state: RootState) => state.CartSlice.items);
-  // Check if current items is in redux
-  const existingItem = items.find(
-    (item) => item.id === params.title && item.size === user_size
+  // const items = useSelector((state: RootState) => state.CartSlice.items);
+  // Get the specific item from the Redux state
+  const specificItem = useSelector((state: RootState) =>
+    state.CartSlice.items.find(
+      (item) => item.id === params.title && item.size === user_size
+    )
   );
 
-  if (existingItem) {
-    const productQuantityNew = existingItem.quantity;
-  }
-  const productQuantity = useSelector(
-    (state: RootState) => state.CartSlice.totalQuantity
-  );
   const increment = () => {
+    // Check if current items is in redux
+    // if (existingItem) {
+    //   setProductQuantity(existingItem.quantity);
+    //   console.log("yes it is there!!!");
+    //   // setProductQuantity(productQuantity + 1);
+    // } else {
+    //   setProductQuantity(1);
+    // }
     dispatch(
       counterActions.addToCart({
         product: { id: params.title, price: params.price, size: "M" },
@@ -44,7 +61,7 @@ export default function Quantity_Size_AddCart({
       method: "POST",
       body: JSON.stringify({
         product_id: params.title,
-        quantity: productQuantity,
+        quantity: 1,
         size: user_size,
       }),
     });
@@ -64,17 +81,7 @@ export default function Quantity_Size_AddCart({
   //     setquantity(user_quantity + 1);
   //   }
   // };
-  // User Size State
-  const [user_size, setSize] = useState("M");
-  const handleSize = (sizeVal: string) => {
-    setSize(sizeVal);
-  };
-  // Selected Size CSS
-  const getButtonClassName = (buttonSize: string) => {
-    return `min-w-[23px] cursor-pointer rounded-full p-[1px] text-center text-base font-bold text-textGrey hover:shadow-lg hover:shadow-gray-400 ${
-      user_size === buttonSize ? "shadow-xl shadow-gray-500" : ""
-    }`;
-  };
+
   return (
     <>
       <ToastContainer
@@ -133,7 +140,7 @@ export default function Quantity_Size_AddCart({
             <button onClick={decrement} className="mr-2 cursor-pointer">
               -
             </button>
-            <span>{productQuantity}</span>
+            <span>{specificItem?.quantity}</span>
             <button
               onClick={increment}
               className="ml-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 border-textBlack"
