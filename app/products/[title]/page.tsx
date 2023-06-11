@@ -3,7 +3,7 @@ import { getProductData1 } from "@/app/interface/fetchFunction";
 import { urlForImage } from "@/sanity/lib/image";
 import Image from "next/image";
 import React, { useState } from "react";
-import Quantity_Size_AddCart from "@/app/sections/Quantity_Size_AddCart";
+import Quantity_Size_AddCart from "./Quantity_Size_AddCart";
 
 // export const getProductData = async (graqQury: string) => {
 //   const res = await client.fetch(graqQury);

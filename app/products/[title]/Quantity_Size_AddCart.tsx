@@ -1,21 +1,35 @@
 "use client";
 import React, { useState } from "react";
-import { IProductsDetail } from "../interface/interface";
+import { IProductsDetail } from "../../interface/interface";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
+import { counterActions } from "@/app/store/slice/CartSlice";
 
 export default function Quantity_Size_AddCart({
   params,
 }: {
   params: IProductsDetail;
 }) {
+  const dispatch = useDispatch();
+  const productQuantity = useSelector(
+    (state: RootState) => state.CartSlice.totalQuantity
+  );
+  const increment = () => {
+    dispatch(counterActions.addToCart({ quantity: 1 }));
+  };
+  const decrement = () => {
+    dispatch(counterActions.remeFromCart({ quantity: 1 }));
+  };
+
   // Sending product to DB
   const handleAddToCart = async () => {
     const res = await fetch("/api/cart", {
       method: "POST",
       body: JSON.stringify({
         product_id: params.title,
-        quantity: user_quantity,
+        quantity: productQuantity,
         size: user_size,
       }),
     });
@@ -23,18 +37,18 @@ export default function Quantity_Size_AddCart({
     toast(`${params.title} added to cart`);
   };
 
-  // User Quantity State
-  const [user_quantity, setquantity] = useState(1);
-  const handleDecrement = () => {
-    if (user_quantity > 0) {
-      setquantity(user_quantity - 1);
-    }
-  };
-  const handleIncrement = () => {
-    if (user_quantity < 5) {
-      setquantity(user_quantity + 1);
-    }
-  };
+  // // User Quantity State
+  // const [user_quantity, setquantity] = useState(1);
+  // const handleDecrement = () => {
+  //   if (user_quantity > 0) {
+  //     setquantity(user_quantity - 1);
+  //   }
+  // };
+  // const handleIncrement = () => {
+  //   if (user_quantity < 5) {
+  //     setquantity(user_quantity + 1);
+  //   }
+  // };
   // User Size State
   const [user_size, setSize] = useState("M");
   const handleSize = (sizeVal: string) => {
@@ -101,12 +115,12 @@ export default function Quantity_Size_AddCart({
             Quantity
           </div>
           <div className="flex items-center gap-1">
-            <button onClick={handleDecrement} className="mr-2 cursor-pointer">
+            <button onClick={decrement} className="mr-2 cursor-pointer">
               -
             </button>
-            <span>{user_quantity}</span>
+            <span>{productQuantity}</span>
             <button
-              onClick={handleIncrement}
+              onClick={increment}
               className="ml-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 border-textBlack"
             >
               +
