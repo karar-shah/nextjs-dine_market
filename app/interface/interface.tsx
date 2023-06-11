@@ -1,31 +1,43 @@
 import { Image as Iimage } from "sanity";
 
-export interface IProducts {
+export type IProducts = {
   title: string;
   image: Iimage;
-}
+};
 
-export interface IProductsDetail {
+export type IProductsDetail = {
   title: string;
-  price: string;
+  price: number;
   image: Iimage;
   clothType: string;
   product_details: string;
   productCare: string[];
-}
+};
 
-export interface CartItem {
+export type CartItem = {
   id: number;
   user_id: string;
   product_id: string;
   quantity: number;
   size: string;
-}
+};
 
-export interface CartList {
+export type CartList = {
   res: CartItem[];
-}
+};
 
-export interface noUser {
+export type noUser = {
   res: string[];
-}
+};
+
+export type reduxProductAction = {
+  id: string;
+  size: string;
+  price: number;
+};
+export type reduxProductState = {
+  id: string;
+  size: string;
+  quantity: number;
+  totalPrice: number;
+};

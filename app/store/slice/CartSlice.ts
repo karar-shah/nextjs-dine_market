@@ -1,8 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import {
+  reduxProductState,
+  reduxProductAction,
+} from "@/app/interface/interface";
 
 export interface CounterState {
-  items: Array<any>;
+  items: Array<reduxProductState>;
   totalAmount: number;
   totalQuantity: number;
 }
@@ -19,16 +23,26 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (
       state: CounterState,
-      action: PayloadAction<{ quantity: number }>
+      action: PayloadAction<{ product: reduxProductAction; quantity: number }>
     ) => {
-      if (state.totalQuantity < 5) {
-        state.totalQuantity += action.payload.quantity;
+      state.totalQuantity += action.payload.quantity;
+      const newItem = action.payload.product;
+      const existingItem = state.items.find((item) => item.id === newItem.id);
+      if (!existingItem) {
+        const totalPrice = newItem.price * action.payload.quantity;
+        state.items.push({
+          ...newItem,
+          quantity: action.payload.quantity,
+          totalPrice,
+        });
+        console.log("existingItem", existingItem);
       }
+      console.log("newItem", newItem);
+      console.log("cartSlice", state.items);
     },
+
     remeFromCart: (state, action: PayloadAction<any>) => {
-      if (state.totalQuantity >= 1) {
-        state.totalQuantity -= action.payload.quantity;
-      }
+      state.totalQuantity -= action.payload.quantity;
     },
     clearCart: (state) => {
       state = initialState;

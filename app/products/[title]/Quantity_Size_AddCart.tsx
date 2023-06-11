@@ -13,11 +13,26 @@ export default function Quantity_Size_AddCart({
   params: IProductsDetail;
 }) {
   const dispatch = useDispatch();
+  // Get all items
+  const items = useSelector((state: RootState) => state.CartSlice.items);
+  // Check if current items is in redux
+  const existingItem = items.find(
+    (item) => item.id === params.title && item.size === user_size
+  );
+
+  if (existingItem) {
+    const productQuantityNew = existingItem.quantity;
+  }
   const productQuantity = useSelector(
     (state: RootState) => state.CartSlice.totalQuantity
   );
   const increment = () => {
-    dispatch(counterActions.addToCart({ quantity: 1 }));
+    dispatch(
+      counterActions.addToCart({
+        product: { id: params.title, price: params.price, size: "M" },
+        quantity: 1,
+      })
+    );
   };
   const decrement = () => {
     dispatch(counterActions.remeFromCart({ quantity: 1 }));
