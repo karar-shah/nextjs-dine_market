@@ -9,6 +9,9 @@ export interface IProductsDetail {
   title: string;
   price: string;
   image: Iimage;
+  clothType: string;
+  product_details: string;
+  productCare: string[];
 }
 
 export interface CartItem {
@@ -19,6 +22,10 @@ export interface CartItem {
   size: string;
 }
 
-export interface ErrorResponse {
-  message: string;
+export interface CartList {
+  res: CartItem[];
+}
+
+export interface noUser {
+  res: string[];
 }

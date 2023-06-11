@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import { client } from "../lib/sanityClient";
+import { client } from "../../lib/sanityClient";
 import { urlForImage } from "@/sanity/lib/image";
-import { IProductsDetail } from "../interface/interface";
+import { IProductsDetail } from "../../interface/interface";
 import Image from "next/image";
 
 const getAllProductsData = async () => {

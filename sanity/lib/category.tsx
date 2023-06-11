@@ -12,8 +12,3 @@ export const category = defineType({
     }),
   ],
 });
-
-// *[_type=="product" ][6]{
-//   title,
-//   price,
-//   category[]->{categoryName}}

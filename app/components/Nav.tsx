@@ -2,6 +2,7 @@ import Image from "next/image";
 import MobilePopUp from "../sections/MobilePopUp";
 import Link from "next/link";
 import NavCart from "../sections/NavCart";
+import Providers from "./Provider";
 
 export default function Nav() {
   return (
@@ -67,7 +68,6 @@ export default function Nav() {
             />
           </div>
           {/* Cart button */}
-          {/* @ts-expect-error Server Component */}
           <NavCart />
         </div>
         {/* Mobile view */}

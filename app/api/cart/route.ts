@@ -16,18 +16,17 @@ export const GET = async (request: NextRequest) => {
         .where(eq(cartTable.user_id, uid));
       return NextResponse.json({ res });
     } catch (error) {
-      console.log(error);
-      return NextResponse.json({ message: "Some wrong in GET request" });
+      // console.log(error);
+      return NextResponse.json({ res: ["Some wrong in GET request"] });
     }
   } else {
-    return NextResponse.json({ message: "no record found" });
+    return NextResponse.json({ res: ["no record found"] });
   }
 };
 
 // POST REQUEST
 export const POST = async (request: NextRequest) => {
   const req = await request.json();
-  console.log("######", req);
   const uid = v4();
   const setCookies = cookies();
   const user_id_cookie = cookies().get("user_id");
