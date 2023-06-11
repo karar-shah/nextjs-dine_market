@@ -12,22 +12,19 @@ export default function Quantity_Size_AddCart({
 }: {
   params: IProductsDetail;
 }) {
-  // const [productQuantity, setProductQuantity] = useState<number>(0);
   // User Size State
   const [user_size, setSize] = useState("M");
   const handleSize = (sizeVal: string) => {
     setSize(sizeVal);
+    console.log("STATESTATE", user_size);
   };
+
   // Selected Size CSS
   const getButtonClassName = (buttonSize: string) => {
     return `min-w-[23px] cursor-pointer rounded-full p-[1px] text-center text-base font-bold text-textGrey hover:shadow-lg hover:shadow-gray-400 ${
       user_size === buttonSize ? "shadow-xl shadow-gray-500" : ""
     }`;
   };
-  // Redux Part
-  const dispatch = useDispatch();
-  // Get all items
-  // const items = useSelector((state: RootState) => state.CartSlice.items);
   // Get the specific item from the Redux state
   const specificItem = useSelector((state: RootState) =>
     state.CartSlice.items.find(
@@ -35,24 +32,22 @@ export default function Quantity_Size_AddCart({
     )
   );
 
+  const dispatch = useDispatch();
   const increment = () => {
-    // Check if current items is in redux
-    // if (existingItem) {
-    //   setProductQuantity(existingItem.quantity);
-    //   console.log("yes it is there!!!");
-    //   // setProductQuantity(productQuantity + 1);
-    // } else {
-    //   setProductQuantity(1);
-    // }
     dispatch(
       counterActions.addToCart({
-        product: { id: params.title, price: params.price, size: "M" },
+        product: {
+          id: params.title,
+          price: parseInt(params.price, 10),
+          size: "M",
+        },
         quantity: 1,
       })
     );
   };
   const decrement = () => {
-    dispatch(counterActions.remeFromCart({ quantity: 1 }));
+    console.log("DECDECDEC");
+    dispatch(counterActions.removeFromCart(params.title));
   };
 
   // Sending product to DB

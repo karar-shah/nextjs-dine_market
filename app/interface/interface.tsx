@@ -7,7 +7,7 @@ export type IProducts = {
 
 export type IProductsDetail = {
   title: string;
-  price: number;
+  price: string;
   image: Iimage;
   clothType: string;
   product_details: string;
