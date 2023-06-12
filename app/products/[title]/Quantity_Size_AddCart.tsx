@@ -25,12 +25,6 @@ export default function Quantity_Size_AddCart({
       user_size === buttonSize ? "shadow-xl shadow-gray-500" : ""
     }`;
   };
-  // Get the specific item from the Redux state
-  // const specificItem = useSelector((state: RootState) =>
-  //   state.CartSlice.items.find(
-  //     (item) => item.id === params.title && item.size === user_size
-  //   )
-  // );
   const value = useSelector((state: RootState) => state.CartSlice.value);
   const allitems = useSelector((state: RootState) => state.CartSlice.items);
 
@@ -78,19 +72,6 @@ export default function Quantity_Size_AddCart({
     toast(`${params.title} added to cart`);
   };
 
-  // // User Quantity State
-  // const [user_quantity, setquantity] = useState(1);
-  // const handleDecrement = () => {
-  //   if (user_quantity > 0) {
-  //     setquantity(user_quantity - 1);
-  //   }
-  // };
-  // const handleIncrement = () => {
-  //   if (user_quantity < 5) {
-  //     setquantity(user_quantity + 1);
-  //   }
-  // };
-
   return (
     <>
       <ToastContainer
@@ -109,7 +90,7 @@ export default function Quantity_Size_AddCart({
             SELECT SIZE
           </div>
           {/* Test div for total items in redux */}
-          {/* <div>
+          <div>
             <ul>
               {allitems.map((i) => (
                 <li
@@ -117,7 +98,7 @@ export default function Quantity_Size_AddCart({
                 >{`id:${i.id} quantity${i.quantity} quantity${i.size} quantity${i.totalPrice}`}</li>
               ))}
             </ul>
-          </div> */}
+          </div>
           <div className="flex gap-3 ">
             <button
               onClick={() => handleSize("XS")}

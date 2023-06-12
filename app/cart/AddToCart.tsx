@@ -3,18 +3,50 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { counterActions } from "../store/slice/CartSlice";
+import { IProductsDetail } from "../interface/interface";
+import { getProductData1 } from "../interface/fetchFunction";
+import React, { useEffect, useState } from "react";
 
-const AddToCart = () => {
-  const dispatch = useDispatch();
-  const productQuantity = useSelector(
-    (state: RootState) => state.CartSlice.totalQuantity
-  );
-  const increment = () => {
-    dispatch(counterActions.addToCart({ quantity: 1 }));
-  };
-  const decrement = () => {
-    dispatch(counterActions.remeFromCart({ quantity: 1 }));
-  };
+const AddToCart = async () => {
+  const itemList = useSelector((state: RootState) => state.CartSlice.items);
+  // const dispatch = useDispatch();
+  // const productQuantity = useSelector(
+  //   (state: RootState) => state.CartSlice.totalQuantity
+  // );
+  // const increment = () => {
+  //   dispatch(counterActions.addToCart({ quantity: 1 }));
+  // };
+  // const decrement = () => {
+  //   dispatch(counterActions.remeFromCart({ quantity: 1 }));
+  // };
+  // useEffect(() => {
+  //   const fetchProduct = async (title: string[]) => {
+  //     const URL = `*[_type == "product" && title in [${title}]]{title, image, price}`;
+  //     const data: IProductsDetail[] = await getProductData1(URL);
+  //   };
+  //   const titleList = itemList.map((item) => item.id);
+  //   // await fetchProduct(titleList);
+  //   console.log("tttttt", titleList);
+  // }, []);
+
+  const [posts, setPosts] = useState<IProductsDetail[]>([]);
+
+  useEffect(() => {
+    // This function will be called every time the component mounts
+    async function fetchPosts() {
+      const URL = `*[_type == "product" && title in ["Cameryn Sash Tie Dress"]]{title, image, price}`;
+      const URL1 = `*[_type == "product" && title in [${itemList.map(
+        (title) => `"${title.id}"`
+      )}]]{title, image, price}`;
+      // console.log(URL1);
+      const data: IProductsDetail[] = await getProductData1(URL1);
+      console.log(data);
+
+      setPosts(data);
+    }
+
+    fetchPosts();
+  }, [itemList]);
 
   return (
     <>
@@ -23,6 +55,11 @@ const AddToCart = () => {
         {/* Cart Box */}
         <div className="flex flex-col gap-4 lg:flex-row ">
           {/* product image and summary container */}
+          {/* <div>
+            {data.map((cartItems) => (
+              <div></div>
+            ))}
+          </div> */}
           <div className="flex flex-col gap-4 md:flex-row  lg:w-2/3 lg:gap-8">
             {/* image */}
             <div>
@@ -70,8 +107,8 @@ const AddToCart = () => {
                 <div className="text-xl font-semibold">$195</div>
                 <div className="ml-auto flex items-center gap-4">
                   {/* Minus */}
-                  <button onClick={decrement}>
-                    {/* <button> */}
+                  {/* <button onClick={decrement}> */}
+                  <button>
                     <svg
                       stroke="currentColor"
                       fill="currentColor"
@@ -84,10 +121,11 @@ const AddToCart = () => {
                       <path d="M872 474H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z"></path>
                     </svg>
                   </button>
-                  <span>{productQuantity}</span>
+                  <span>{0}</span>
+                  {/* <span>{productQuantity}</span> */}
                   {/* Plus */}
-                  <button onClick={increment}>
-                    {/* <button> */}
+                  {/* <button onClick={increment}> */}
+                  <button>
                     <div className="rounded-full border border-gray-900 p-1 text-black">
                       <svg
                         stroke="currentColor"
@@ -109,8 +147,9 @@ const AddToCart = () => {
               </div>
             </div>
           </div>
+
           {/* summary */}
-          <div className="flex flex-col gap-6 p-8 lg:gap-8 lg:pt-0">
+          {/* <div className="flex flex-col gap-6 p-8 lg:gap-8 lg:pt-0">
             <h2 className="text-xl font-bold">Order Summary</h2>
             <div className="flex justify-between">
               <div>Quantity</div>
@@ -126,7 +165,7 @@ const AddToCart = () => {
             >
               Proceed to Checkout
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

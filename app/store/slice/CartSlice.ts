@@ -4,6 +4,7 @@ import {
   reduxProductState,
   reduxProductAction,
 } from "@/app/interface/interface";
+import { index } from "drizzle-orm/pg-core";
 
 export interface CounterState {
   items: Array<reduxProductState>;
@@ -95,6 +96,7 @@ const cartSlice = createSlice({
     updateSize: (state: CounterState, action: PayloadAction<string>) => {
       state.size = action.payload;
     },
+    incrementInCart: (state: CounterState, action: PayloadAction<any>) => {},
   },
 });
 
