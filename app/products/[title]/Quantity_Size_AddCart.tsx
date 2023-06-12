@@ -12,13 +12,13 @@ export default function Quantity_Size_AddCart({
 }: {
   params: IProductsDetail;
 }) {
-  // User Size State
-  const [user_size, setSize] = useState("M");
-  const handleSize = (sizeVal: string) => {
-    setSize(sizeVal);
-    console.log("STATESTATE", user_size);
-  };
+  const dispatch = useDispatch();
 
+  const user_size = useSelector((state: RootState) => state.CartSlice.size);
+
+  const handleSize = (curSize: string) => {
+    dispatch(counterActions.updateSize(curSize));
+  };
   // Selected Size CSS
   const getButtonClassName = (buttonSize: string) => {
     return `min-w-[23px] cursor-pointer rounded-full p-[1px] text-center text-base font-bold text-textGrey hover:shadow-lg hover:shadow-gray-400 ${
@@ -26,24 +26,33 @@ export default function Quantity_Size_AddCart({
     }`;
   };
   // Get the specific item from the Redux state
-  const specificItem = useSelector((state: RootState) =>
-    state.CartSlice.items.find(
-      (item) => item.id === params.title && item.size === user_size
-    )
-  );
+  // const specificItem = useSelector((state: RootState) =>
+  //   state.CartSlice.items.find(
+  //     (item) => item.id === params.title && item.size === user_size
+  //   )
+  // );
+  const value = useSelector((state: RootState) => state.CartSlice.value);
 
-  const dispatch = useDispatch();
-  const increment = () => {
+  const addCartIncrement = () => {
+    console.log("sending to redux:", {
+      id: params.title,
+      price: parseInt(params.price, 10),
+      size: user_size,
+    });
     dispatch(
       counterActions.addToCart({
         product: {
           id: params.title,
           price: parseInt(params.price, 10),
-          size: "M",
+          size: user_size,
         },
-        quantity: 1,
+        quantity: value,
       })
     );
+  };
+
+  const smallInc = () => {
+    dispatch(counterActions.smallIncrement(1));
   };
   const decrement = () => {
     console.log("DECDECDEC");
@@ -135,9 +144,10 @@ export default function Quantity_Size_AddCart({
             <button onClick={decrement} className="mr-2 cursor-pointer">
               -
             </button>
-            <span>{specificItem?.quantity}</span>
+            {/* <span>{specificItem?.quantity}</span> */}
+            <span>{value}</span>
             <button
-              onClick={increment}
+              onClick={smallInc}
               className="ml-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 border-textBlack"
             >
               +
@@ -147,7 +157,8 @@ export default function Quantity_Size_AddCart({
         <div className="flex items-center gap-4">
           <div className="flex w-4/5 min-w-[180px] items-center justify-center border-l-2 border-t-2 border-textGrey bg-blackButton p-4 text-base font-semibold text-white lg:w-2/6">
             <button
-              onClick={handleAddToCart}
+              // onClick={handleAddToCart}
+              onClick={addCartIncrement}
               className="flex flex-row items-center justify-center gap-3"
             >
               <svg

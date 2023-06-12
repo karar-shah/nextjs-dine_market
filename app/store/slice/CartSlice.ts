@@ -7,14 +7,18 @@ import {
 
 export interface CounterState {
   items: Array<reduxProductState>;
+  value: number;
   totalAmount: number;
   totalQuantity: number;
+  size: string;
 }
 
 const initialState: CounterState = {
   items: [],
   totalAmount: 0,
   totalQuantity: 0,
+  value: 0,
+  size: "",
 };
 
 const cartSlice = createSlice({
@@ -27,17 +31,18 @@ const cartSlice = createSlice({
     ) => {
       state.totalQuantity += action.payload.quantity;
       const newItem = action.payload.product;
-      const existingItem = state.items.find((item) => item.id === newItem.id);
+      const existingItem = state.items.find(
+        (item) => item.id === newItem.id && item.size === newItem.size
+      );
       if (!existingItem) {
         const totalPrice = newItem.price * action.payload.quantity;
-        state.totalAmount = state.totalAmount + newItem.price;
-
+        state.totalAmount =
+          state.totalAmount + newItem.price * action.payload.quantity;
         state.items.push({
           ...newItem,
           quantity: action.payload.quantity,
           totalPrice,
         });
-        console.log("existingItem", existingItem);
       } else {
         const totalPrice =
           existingItem.totalPrice + newItem.price * action.payload.quantity;
@@ -45,8 +50,8 @@ const cartSlice = createSlice({
         existingItem.totalPrice = totalPrice;
         state.totalAmount = state.totalAmount + newItem.price;
       }
-      console.log("newItem", newItem);
-      console.log("cartSlice", state.items);
+
+      state.value = 0;
     },
 
     removeFromCart(state: CounterState, action: PayloadAction<string>) {
@@ -71,6 +76,12 @@ const cartSlice = createSlice({
     },
     clearCart: (state) => {
       state = initialState;
+    },
+    smallIncrement: (state: CounterState, action: PayloadAction<number>) => {
+      state.value += action.payload;
+    },
+    updateSize: (state: CounterState, action: PayloadAction<string>) => {
+      state.size = action.payload;
     },
   },
 });
