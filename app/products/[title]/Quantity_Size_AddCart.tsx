@@ -32,13 +32,9 @@ export default function Quantity_Size_AddCart({
   //   )
   // );
   const value = useSelector((state: RootState) => state.CartSlice.value);
+  const allitems = useSelector((state: RootState) => state.CartSlice.items);
 
   const addCartIncrement = () => {
-    console.log("sending to redux:", {
-      id: params.title,
-      price: parseInt(params.price, 10),
-      size: user_size,
-    });
     dispatch(
       counterActions.addToCart({
         product: {
@@ -103,6 +99,16 @@ export default function Quantity_Size_AddCart({
           <div className="text-sm font-bold leading-4 tracking-wider text-textBlack">
             SELECT SIZE
           </div>
+          {/* Test div for total items in redux */}
+          {/* <div>
+            <ul>
+              {allitems.map((i) => (
+                <li
+                  key={`${i.id}${i.size}`}
+                >{`id:${i.id} quantity${i.quantity} quantity${i.size} quantity${i.totalPrice}`}</li>
+              ))}
+            </ul>
+          </div> */}
           <div className="flex gap-3 ">
             <button
               onClick={() => handleSize("XS")}

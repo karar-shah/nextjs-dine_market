@@ -29,15 +29,25 @@ const cartSlice = createSlice({
       state: CounterState,
       action: PayloadAction<{ product: reduxProductAction; quantity: number }>
     ) => {
-      state.totalQuantity += action.payload.quantity;
       const newItem = action.payload.product;
+      console.log("length", state.items.length);
+      console.log("NewItem", newItem);
       const existingItem = state.items.find(
         (item) => item.id === newItem.id && item.size === newItem.size
       );
+
+      state.totalQuantity = state.totalQuantity + action.payload.quantity;
+      state.totalAmount =
+        state.totalAmount +
+        action.payload.quantity * action.payload.product.price;
+
       if (!existingItem) {
         const totalPrice = newItem.price * action.payload.quantity;
-        state.totalAmount =
-          state.totalAmount + newItem.price * action.payload.quantity;
+        console.log("Push", {
+          ...newItem,
+          quantity: action.payload.quantity,
+          totalPrice,
+        });
         state.items.push({
           ...newItem,
           quantity: action.payload.quantity,
@@ -48,7 +58,6 @@ const cartSlice = createSlice({
           existingItem.totalPrice + newItem.price * action.payload.quantity;
         existingItem.quantity += action.payload.quantity;
         existingItem.totalPrice = totalPrice;
-        state.totalAmount = state.totalAmount + newItem.price;
       }
 
       state.value = 0;
