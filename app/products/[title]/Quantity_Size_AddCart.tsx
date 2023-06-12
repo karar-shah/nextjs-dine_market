@@ -35,20 +35,29 @@ export default function Quantity_Size_AddCart({
   const allitems = useSelector((state: RootState) => state.CartSlice.items);
 
   const addCartIncrement = () => {
-    dispatch(
-      counterActions.addToCart({
-        product: {
-          id: params.title,
-          price: parseInt(params.price, 10),
-          size: user_size,
-        },
-        quantity: value,
-      })
-    );
+    if (value > 0) {
+      dispatch(
+        counterActions.addToCart({
+          product: {
+            id: params.title,
+            price: parseInt(params.price, 10),
+            size: user_size,
+          },
+          quantity: value,
+        })
+      );
+    }
   };
 
   const smallInc = () => {
-    dispatch(counterActions.smallIncrement(1));
+    if (value < 5) {
+      dispatch(counterActions.smallIncrement(1));
+    }
+  };
+  const smallDec = () => {
+    if (value > 0) {
+      dispatch(counterActions.smallDecrement(1));
+    }
   };
   const decrement = () => {
     console.log("DECDECDEC");
@@ -147,7 +156,7 @@ export default function Quantity_Size_AddCart({
             Quantity
           </div>
           <div className="flex items-center gap-1">
-            <button onClick={decrement} className="mr-2 cursor-pointer">
+            <button onClick={smallDec} className="mr-2 cursor-pointer">
               -
             </button>
             {/* <span>{specificItem?.quantity}</span> */}
