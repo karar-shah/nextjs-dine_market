@@ -9,7 +9,7 @@ export type IProductsDetail = {
   title: string;
   price: string;
   image: Iimage;
-  clothType: string;
+  clothType: { clothTypeName: string };
   product_details: string;
   productCare: string[];
 };
@@ -40,4 +40,11 @@ export type reduxProductState = {
   size: string;
   quantity: number;
   totalPrice: number;
+};
+
+export type cartPageItem = {
+  title: string;
+  clothType: { clothTypeName: string };
+  price: string;
+  image: Iimage;
 };
