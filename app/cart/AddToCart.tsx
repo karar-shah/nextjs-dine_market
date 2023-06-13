@@ -85,7 +85,7 @@ const AddToCart = () => {
   // console.log(data);
   return (
     <div>
-      {data?.length > 0 ? (
+      {data && data.length > 0 ? (
         <div>
           <div className="px-8 lg:px-32">
             <h1 className="mb-8 text-3xl font-bold">Shopping Cart</h1>
@@ -103,6 +103,7 @@ const AddToCart = () => {
                           width={200}
                           alt="product"
                           className="rounded-md "
+                          quality={50}
                         />
                       </div>
                       {/* product details */}
