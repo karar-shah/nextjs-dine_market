@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { IProductsDetail } from "../../interface/interface";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,7 +15,27 @@ export default function Quantity_Size_AddCart({
   const dispatch = useDispatch();
 
   const user_size = useSelector((state: RootState) => state.CartSlice.size);
+  const value = useSelector((state: RootState) => state.CartSlice.value);
+  const allitems = useSelector((state: RootState) => state.CartSlice.items);
 
+  // post item on DB
+  const postCartItemtoDB = async () => {
+    toast.loading(`Wait... Adding to cart`);
+    const res = await fetch("/api/cart", {
+      method: "POST",
+      body: JSON.stringify({
+        product_id: params.title,
+        size: user_size,
+        quantity: value,
+        price: params.price,
+      }),
+    });
+    // const result = await res.json();
+    // console.log(result);
+    toast.dismiss();
+  };
+
+  // Update selected size state
   const handleSize = (curSize: string) => {
     dispatch(counterActions.updateSize(curSize));
   };
@@ -25,11 +45,10 @@ export default function Quantity_Size_AddCart({
       user_size === buttonSize ? "shadow-xl shadow-gray-500" : ""
     }`;
   };
-  const value = useSelector((state: RootState) => state.CartSlice.value);
-  const allitems = useSelector((state: RootState) => state.CartSlice.items);
 
-  const addCartIncrement = () => {
-    if (value > 0) {
+  // Add items to cart
+  const addCartIncrement = async () => {
+    if (value > 0 && user_size !== "") {
       dispatch(
         counterActions.addToCart({
           product: {
@@ -40,6 +59,14 @@ export default function Quantity_Size_AddCart({
           quantity: value,
         })
       );
+      await postCartItemtoDB();
+      toast(`${params.title} added to cart`);
+    } else {
+      if (user_size === "") {
+        toast.error(`Please select size`);
+      } else {
+        toast.error(`Please Select quantity`);
+      }
     }
   };
 
@@ -53,24 +80,24 @@ export default function Quantity_Size_AddCart({
       dispatch(counterActions.smallDecrement(1));
     }
   };
-  const decrement = () => {
-    console.log("DECDECDEC");
-    dispatch(counterActions.removeFromCart(params.title));
-  };
+  // const decrement = () => {
+  //   console.log("DECDECDEC");
+  //   dispatch(counterActions.removeFromCart(params.title));
+  // };
 
   // Sending product to DB
-  const handleAddToCart = async () => {
-    const res = await fetch("/api/cart", {
-      method: "POST",
-      body: JSON.stringify({
-        product_id: params.title,
-        quantity: 1,
-        size: user_size,
-      }),
-    });
-    const result = await res.json();
-    toast(`${params.title} added to cart`);
-  };
+  // const handleAddToCart = async () => {
+  //   const res = await fetch("/api/cart", {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       product_id: params.title,
+  //       quantity: 1,
+  //       size: user_size,
+  //     }),
+  //   });
+  //   const result = await res.json();
+  //   toast(`${params.title} added to cart`);
+  // };
 
   return (
     <>
@@ -95,7 +122,7 @@ export default function Quantity_Size_AddCart({
               {allitems.map((i) => (
                 <li
                   key={`${i.id}${i.size}`}
-                >{`id:${i.id} quantity${i.quantity} quantity${i.size} quantity${i.totalPrice}`}</li>
+                >{`id:${i.id} quantity${i.quantity} size${i.size} price${i.totalPrice}`}</li>
               ))}
             </ul>
           </div>

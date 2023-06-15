@@ -20,6 +20,7 @@ export type CartItem = {
   product_id: string;
   quantity: number;
   size: string;
+  price: string;
 };
 
 export type CartList = {

@@ -2,105 +2,166 @@
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { counterActions } from "../store/slice/CartSlice";
-import { IProductsDetail, cartPageItem } from "../interface/interface";
+import {
+  CartItem,
+  CartList,
+  IProductsDetail,
+  cartPageItem,
+  noUser,
+} from "../interface/interface";
 import { getProductData1 } from "../interface/fetchFunction";
 import React, { useEffect, useState } from "react";
-import useSWR from "swr";
-import { client } from "../lib/sanityClient";
 import { urlForImage } from "@/sanity/lib/image";
-import { data } from "autoprefixer";
-// change type of use state data/setData
+import { counterActions } from "../store/slice/CartSlice";
 
-const fetchProductData = async (query: string) => {
-  // const query = `*[_type == "product" && title in ["Flex Push Button Bomber","Brushed Raglan Sweatshirt"]]
-  // {title, image, price, clothType -> {clothTypeName}}`;
-  const result = await client.fetch(query);
-  console.log("FetchedData", result);
-  return result;
+const fetchSanityData = async (
+  setData: any,
+  setIsLoading: any,
+  setError: any,
+  reduxItems: any
+) => {
+  const URL1 = `*[_type == "product" && title in [${reduxItems.map(
+    (title: any) => `"${title.id}"`
+  )}]]{title, image, price, clothType -> {clothTypeName}}`;
+  try {
+    const result: cartPageItem[] = await getProductData1(URL1);
+    console.log("Updating dataState", result);
+    setData(result);
+    setIsLoading(false); // Set isLoading to false after data is fetched
+  } catch (error: any) {
+    setError(error);
+    setIsLoading(false); // Set isLoading to false in case of an error
+  }
 };
-
+// -----------------------------------------------------------------
 const AddToCart = () => {
   const [data, setData] = useState<cartPageItem[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [dataSql, setDataSql] = useState<CartList | noUser>({ res: [] });
+  const [isLoadingSql, setIsLoadingSql] = useState(true);
+  const [errorSql, setErrorSql] = useState(null);
+
+  // Redux states
+  const dispatch = useDispatch();
   const reduxItems = useSelector((state: RootState) => state.CartSlice.items);
 
+  // Fetch data from Sanity on component mount and whenever reduxItems change
   useEffect(() => {
-    const fetchData = async () => {
-      const URL1 = `*[_type == "product" && title in [${reduxItems.map(
-        (title) => `"${title.id}"`
-      )}]]{title, image, price, clothType -> {clothTypeName}}`;
-      // console.log(URL1);
+    if (reduxItems.length > 0) {
+      const fetchSanityData = async () => {
+        const URL1 = `*[_type == "product" && title in [${reduxItems.map(
+          (title) => `"${title.id}"`
+        )}]]{title, image, price, clothType -> {clothTypeName}}`;
+        try {
+          const result: cartPageItem[] = await getProductData1(URL1);
+          console.log("Updating dataState", result);
+          setData(result);
+          setIsLoading(false);
+        } catch (error: any) {
+          setError(error);
+          setIsLoading(false);
+        }
+      };
+
+      fetchSanityData();
+    }
+  }, [reduxItems]);
+
+  // Fetch user data from DB on component mount
+  useEffect(() => {
+    const fetchSqlData = async () => {
       try {
-        const result: cartPageItem[] = await fetchProductData(URL1);
-        console.log("Updating dataState", result);
-        setData(result);
-        setIsLoading(false); // Set isLoading to false after data is fetched
+        const resSql = await fetch("/api/cart", {
+          method: "GET",
+        });
+        const sqlData: CartList | noUser = await resSql.json();
+        setDataSql(sqlData);
+        setIsLoadingSql(false);
       } catch (error: any) {
-        setError(error);
-        setIsLoading(false); // Set isLoading to false in case of an error
+        setErrorSql(error);
+        setIsLoadingSql(false);
       }
     };
 
-    fetchData();
+    fetchSqlData();
   }, []);
 
-  if (error) return <div>Failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
-  // return (
-  //   <div>
-  //     <div>Data Here</div>
-  //     {/* <div>{data ? data[0].price : ""}</div> */}
-  //     {data?.map((cartItems) => (
-  //       <div key={`${cartItems.title}`}>
+  // Add items to cart when dataSql changes
+  useEffect(() => {
+    if (
+      "res" in dataSql &&
+      typeof dataSql.res[0] !== "string" &&
+      dataSql.res.length > 0
+    ) {
+      for (let i = 0; i < dataSql.res.length; i++) {
+        const item = dataSql.res[i] as CartItem;
+        dispatch(
+          counterActions.addToCart({
+            product: {
+              id: item.product_id,
+              price: parseInt(item.price, 10),
+              size: item.size,
+            },
+            quantity: item.quantity,
+          })
+        );
+      }
+    }
+  }, [dataSql]);
 
-  //       </div>
-  //     ))}
-  //   </div>
-  // );
-  // const [posts, setPosts] = useState<IProductsDetail[] | null>(null);
-  // const [load, setLoad] = useState<boolean>(true);
-  // const itemList = useSelector((state: RootState) => state.CartSlice.items);
+  // Fetch updated data for items in Redux on reduxItems change
+  useEffect(() => {
+    if (reduxItems.length > 0) {
+      const fetchUpdatedData = async () => {
+        const URL = `*[_type == "product" && title in [${reduxItems.map(
+          (title) => `"${title.id}"`
+        )}]]{title, image, price, clothType -> {clothTypeName}}`;
+        try {
+          const updatedData: cartPageItem[] = await getProductData1(URL);
+          setData(updatedData);
+          setIsLoading(false);
+        } catch (error: any) {
+          setError(error);
+          setIsLoading(false);
+        }
+      };
 
-  // useEffect(() => {
-  //   // This function will be called every time the component mounts
-  //   async function fetchPosts() {
-  // const URL1 = `*[_type == "product" && title in [${itemList.map(
-  //   (title) => `"${title.id}"`
-  //     )}]]{title, image, price}`;
-  //     const data: IProductsDetail[] = await getProductData1(URL1);
-  //     console.log("sanityDATA", data);
-  //     setPosts(data);
-  //     setLoad(false);
-  //   }
+      fetchUpdatedData();
+    }
+  }, [reduxItems]);
 
-  //   fetchPosts();Flex Push Button Bomber
-  // }, []);
-  // const URL2 = `*[_type == "product" && title in ["Flex Push Button Bomber"]]{title, image, price}`;
+  // UI RENDERING
+  if (error) return <div className="mx-16 lg:px-32">Failed to load</div>;
+  // if (isLoading) return <div className="mx-16 lg:px-32">Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="mx-16 mt-32 text-center lg:px-24">
+        <h1 className="mb-8 text-4xl font-bold text-textGrey">Cart is Empty</h1>
+      </div>
+    );
 
-  // const { data, error, isLoading } = useSWR(URL2, fetcher);
-  // if (error) return <div>failed to load</div>;
-  // if (isLoading) return <div>loading...</div>;
-  // console.log(data);
   return (
     <div>
       {data && data.length > 0 ? (
         <div>
-          <div className="px-8 lg:px-32">
+          <div className="lg:px- mx-16">
             <h1 className="mb-8 text-3xl font-bold">Shopping Cart</h1>
             {/* Cart Box */}
             <div className="flex flex-col justify-between gap-4 lg:flex-row">
               <div className=" flex flex-col gap-16">
+                {/* Maping for Cart Items */}
                 {data.map((cartItem) => (
                   <div key={`${cartItem.title}`}>
                     <div className="flex flex-col gap-4 md:flex-row lg:gap-8">
+                      {/* <div className="flex flex-col  md:flex-row lg:gap-8"> */}
                       {/* image */}
-                      <div>
+                      <div className="relative h-[255px] w-[240px] lg:h-[210px] lg:w-[200px]">
                         <Image
                           src={urlForImage(cartItem.image).url()}
-                          height={202}
-                          width={200}
+                          // height={202}
+                          // width={200}
+                          fill={true}
                           alt="product"
                           className="rounded-md "
                           quality={50}
@@ -108,7 +169,11 @@ const AddToCart = () => {
                       </div>
                       {/* product details */}
                       <div className="flex flex-grow flex-col md:gap-4">
-                        <div className="flex justify-between gap-32 pt-8 md:pt-0">
+                        {/* <div className="flex justify-between gap-0 pt-8 md:pt-0 lg:gap-32"> */}
+                        <div
+                          className="min-w[300px] md:min-w[4050px]  lg:min-w[330px] flex justify-between
+                        pt-8 md:pt-0 lg:gap-36"
+                        >
                           <div className="text-2xl font-light">
                             {cartItem.title}
                           </div>
@@ -162,7 +227,13 @@ const AddToCart = () => {
                                 <path d="M872 474H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z"></path>
                               </svg>
                             </button>
-                            <span>{0}</span>
+                            <span>
+                              {
+                                reduxItems.find(
+                                  (item) => item.id === cartItem.title
+                                )?.quantity
+                              }
+                            </span>
                             {/* <span>{productQuantity}</span> */}
                             {/* Plus */}
                             {/* <button onClick={increment}> */}
@@ -214,7 +285,7 @@ const AddToCart = () => {
           </div>
         </div>
       ) : (
-        <div className="mt-32 px-8 text-center lg:px-24">
+        <div className="mx-16 mt-32 text-center lg:px-24">
           <h1 className="mb-8 text-4xl font-bold text-textGrey">
             Cart is Empty
           </h1>

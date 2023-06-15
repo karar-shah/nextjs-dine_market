@@ -7,6 +7,8 @@ import { eq } from "drizzle-orm";
 // GET REQUEST
 export const GET = async (request: NextRequest) => {
   const uid = cookies().get("user_id")?.value;
+  // const req = request.nextUrl;
+  // const uid = req.searchParams.get("user_id");
   console.log(uid);
   if (uid) {
     try {
@@ -14,6 +16,7 @@ export const GET = async (request: NextRequest) => {
         .select()
         .from(cartTable)
         .where(eq(cartTable.user_id, uid));
+      console.log(res);
       return NextResponse.json({ res });
     } catch (error) {
       // console.log(error);
@@ -43,6 +46,7 @@ export const POST = async (request: NextRequest) => {
         quantity: req.quantity,
         size: req.size,
         user_id: cookies().get("user_id")?.value as string,
+        price: req.price,
       })
       .returning();
     return NextResponse.json({ res });

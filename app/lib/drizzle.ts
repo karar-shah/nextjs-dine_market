@@ -8,6 +8,7 @@ export const cartTable = pgTable("cart", {
   product_id: varchar("product_id", { length: 255 }).notNull(),
   quantity: integer("quantity").notNull(),
   size: varchar("size", { length: 255 }).notNull(),
+  price: integer("price").notNull(),
 });
 
 export const db = drizzle(sql);
