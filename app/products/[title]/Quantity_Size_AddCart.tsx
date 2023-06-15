@@ -80,24 +80,6 @@ export default function Quantity_Size_AddCart({
       dispatch(counterActions.smallDecrement(1));
     }
   };
-  // const decrement = () => {
-  //   console.log("DECDECDEC");
-  //   dispatch(counterActions.removeFromCart(params.title));
-  // };
-
-  // Sending product to DB
-  // const handleAddToCart = async () => {
-  //   const res = await fetch("/api/cart", {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       product_id: params.title,
-  //       quantity: 1,
-  //       size: user_size,
-  //     }),
-  //   });
-  //   const result = await res.json();
-  //   toast(`${params.title} added to cart`);
-  // };
 
   return (
     <>

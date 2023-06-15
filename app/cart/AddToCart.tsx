@@ -14,25 +14,6 @@ import React, { useEffect, useState } from "react";
 import { urlForImage } from "@/sanity/lib/image";
 import { counterActions } from "../store/slice/CartSlice";
 
-const fetchSanityData = async (
-  setData: any,
-  setIsLoading: any,
-  setError: any,
-  reduxItems: any
-) => {
-  const URL1 = `*[_type == "product" && title in [${reduxItems.map(
-    (title: any) => `"${title.id}"`
-  )}]]{title, image, price, clothType -> {clothTypeName}}`;
-  try {
-    const result: cartPageItem[] = await getProductData1(URL1);
-    console.log("Updating dataState", result);
-    setData(result);
-    setIsLoading(false); // Set isLoading to false after data is fetched
-  } catch (error: any) {
-    setError(error);
-    setIsLoading(false); // Set isLoading to false in case of an error
-  }
-};
 // -----------------------------------------------------------------
 const AddToCart = () => {
   const [data, setData] = useState<cartPageItem[] | null>(null);
@@ -45,6 +26,12 @@ const AddToCart = () => {
   // Redux states
   const dispatch = useDispatch();
   const reduxItems = useSelector((state: RootState) => state.CartSlice.items);
+  const totalQuant = useSelector(
+    (state: RootState) => state.CartSlice.totalQuantity
+  );
+  const totalAmount = useSelector(
+    (state: RootState) => state.CartSlice.totalAmount
+  );
 
   // Fetch data from Sanity on component mount and whenever reduxItems change
   useEffect(() => {
@@ -90,7 +77,6 @@ const AddToCart = () => {
   }, []);
 
   // Add items to cart when dataSql changes
-  // Add items to cart when dataSql changes
   useEffect(() => {
     if (
       "res" in dataSql &&
@@ -116,7 +102,7 @@ const AddToCart = () => {
         }
       }
     }
-  }, [dataSql, reduxItems]);
+  }, [dataSql, reduxItems, dispatch]);
 
   // Fetch updated data for items in Redux on reduxItems change
   useEffect(() => {
@@ -140,9 +126,9 @@ const AddToCart = () => {
   }, [reduxItems]);
 
   // UI RENDERING
-  if (error) return <div className="mx-16 lg:px-32">Failed to load</div>;
-  // if (isLoading) return <div className="mx-16 lg:px-32">Loading...</div>;
-  if (isLoading)
+  if (error && errorSql)
+    return <div className="mx-16 lg:px-32">Failed to load</div>;
+  if (isLoading && isLoadingSql)
     return (
       <div className="mx-16 mt-32 text-center lg:px-24">
         <h1 className="mb-8 text-4xl font-bold text-textGrey">
@@ -164,7 +150,6 @@ const AddToCart = () => {
                 {data.map((cartItem) => (
                   <div key={`${cartItem.title}`}>
                     <div className="flex flex-col gap-4 md:flex-row lg:gap-8">
-                      {/* <div className="flex flex-col  md:flex-row lg:gap-8"> */}
                       {/* image */}
                       <div className="relative h-[255px] w-[240px] lg:h-[210px] lg:w-[200px]">
                         <Image
@@ -179,7 +164,6 @@ const AddToCart = () => {
                       </div>
                       {/* product details */}
                       <div className="flex flex-grow flex-col md:gap-4">
-                        {/* <div className="flex justify-between gap-0 pt-8 md:pt-0 lg:gap-32"> */}
                         <div
                           className="min-w[300px] md:min-w[4050px]  lg:min-w[330px] flex justify-between
                         pt-8 md:pt-0 lg:gap-36"
@@ -188,7 +172,7 @@ const AddToCart = () => {
                             {cartItem.title}
                           </div>
                           {/* Delete icon */}
-                          <div className="">
+                          <button className="">
                             <svg
                               stroke="currentColor"
                               fill="none"
@@ -205,7 +189,7 @@ const AddToCart = () => {
                                 d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                               ></path>
                             </svg>
-                          </div>
+                          </button>
                         </div>
                         <div className="py-2 font-semibold text-gray-700">
                           {cartItem.clothType.clothTypeName}
@@ -219,12 +203,17 @@ const AddToCart = () => {
                         </div>
                         <div className="flex">
                           <div className="text-xl font-semibold">
-                            ${cartItem.price}
+                            {/* ${cartItem.price} */}$
+                            {
+                              reduxItems.find(
+                                (item) => item.id === cartItem.title
+                              )?.totalPrice
+                            }
                           </div>
                           <div className="ml-auto flex items-center gap-4">
                             {/* Minus */}
                             {/* <button onClick={decrement}> */}
-                            <button>
+                            {/* <button>
                               <svg
                                 stroke="currentColor"
                                 fill="currentColor"
@@ -236,7 +225,8 @@ const AddToCart = () => {
                               >
                                 <path d="M872 474H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z"></path>
                               </svg>
-                            </button>
+                            </button> */}
+                            <div className="text-black">Qty.</div>
                             <span>
                               {
                                 reduxItems.find(
@@ -247,7 +237,7 @@ const AddToCart = () => {
                             {/* <span>{productQuantity}</span> */}
                             {/* Plus */}
                             {/* <button onClick={increment}> */}
-                            <button>
+                            {/* <button>
                               <div className="rounded-full border border-gray-900 p-1 text-black">
                                 <svg
                                   stroke="currentColor"
@@ -264,7 +254,7 @@ const AddToCart = () => {
                                   <path d="M168 474m8 0l672 0q8 0 8 8l0 60q0 8-8 8l-672 0q-8 0-8-8l0-60q0-8 8-8Z"></path>
                                 </svg>
                               </div>
-                            </button>
+                            </button> */}
                           </div>
                         </div>
                       </div>
@@ -278,11 +268,13 @@ const AddToCart = () => {
                 <h2 className="text-xl font-bold">Order Summary</h2>
                 <div className="flex justify-between">
                   <div>Quantity</div>
-                  <div>1 Product</div>
+                  <div>{`${totalQuant} Product${
+                    totalQuant > 1 ? "s" : ""
+                  }`}</div>
                 </div>
                 <div className="flex justify-between">
                   <div>Subtotal</div>
-                  <div>{`$`}</div>
+                  <div>{`$ ${totalAmount}.00`}</div>
                 </div>
                 <button
                   type="submit"

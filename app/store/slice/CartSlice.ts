@@ -71,19 +71,18 @@ const cartSlice = createSlice({
 
       state.totalQuantity--;
 
-      if (existingItem?.quantity === 1) {
-        state.items = state.items.filter((item) => item.id !== productId);
-        state.totalAmount =
-          state.totalAmount -
-          existingItem?.totalPrice! / existingItem?.quantity!;
-      } else {
-        existingItem!.quantity--;
-        existingItem!.totalPrice =
-          existingItem!.totalPrice - existingItem?.totalPrice!;
-        state.totalAmount =
-          state.totalAmount -
-          existingItem?.totalPrice! / existingItem?.quantity!;
-      }
+      // if (existingItem?.quantity === 1) {
+      state.items = state.items.filter((item) => item.id !== productId);
+      state.totalAmount =
+        state.totalAmount - existingItem?.totalPrice! / existingItem?.quantity!;
+      // } else {
+      //   existingItem!.quantity--;
+      //   existingItem!.totalPrice =
+      //     existingItem!.totalPrice - existingItem?.totalPrice!;
+      //   state.totalAmount =
+      //     state.totalAmount -
+      //     existingItem?.totalPrice! / existingItem?.quantity!;
+      // }
     },
     clearCart: (state) => {
       state = initialState;

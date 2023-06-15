@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import NavCart from "./NavCart";
 // import { useSelector } from "react-redux";
 // import { RootState } from "../store/store";
 
@@ -78,7 +79,7 @@ export default function MobilePopUp() {
           {/* List of links */}
           <li>
             {/* Cart button */}
-            <Link onClick={() => setOpen(!open)} href="/cart">
+            {/* <Link onClick={() => setOpen(!open)} href="/cart">
               <button className="relative rounded-full bg-gray-200 p-4">
                 <svg
                   stroke="currentColor"
@@ -108,7 +109,8 @@ export default function MobilePopUp() {
                   {0}
                 </span>
               </button>
-            </Link>
+            </Link> */}
+            <NavCart />
           </li>
           <li>
             <Link onClick={() => setOpen(!open)} href="/female">
