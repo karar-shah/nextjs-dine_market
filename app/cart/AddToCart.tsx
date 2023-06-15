@@ -5,7 +5,6 @@ import { RootState } from "../store/store";
 import {
   CartItem,
   CartList,
-  IProductsDetail,
   cartPageItem,
   noUser,
 } from "../interface/interface";
@@ -13,6 +12,7 @@ import { getProductData1 } from "../interface/fetchFunction";
 import React, { useEffect, useState } from "react";
 import { urlForImage } from "@/sanity/lib/image";
 import { counterActions } from "../store/slice/CartSlice";
+import { loadStripe } from "@stripe/stripe-js";
 
 // -----------------------------------------------------------------
 const AddToCart = () => {
@@ -124,6 +124,47 @@ const AddToCart = () => {
       fetchUpdatedData();
     }
   }, [reduxItems]);
+
+  // Stripe Payment
+  const publishableKey = process.env
+    .NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string;
+  const stripePromise = loadStripe(publishableKey);
+
+  const createCheckOutSession = async () => {
+    // setLoading(true);
+    const stripe = await stripePromise;
+
+    const checkoutSession = await fetch(
+      "http://localhost:3000/api/create-stripe-session",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          item: {
+            name: "Dine Market Product",
+            description: "Product description",
+            image:
+              "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1400&q=80",
+            quantity: totalQuant,
+            price: totalAmount,
+          },
+        }),
+      }
+    );
+
+    console.log("Result------------- in prod page==========", checkoutSession);
+
+    const sessionID = await checkoutSession.json();
+    const result = await stripe?.redirectToCheckout({
+      sessionId: sessionID,
+    });
+    if (result?.error) {
+      alert(result.error.message);
+    }
+    // setLoading(false);
+  };
 
   // UI RENDERING
   if (error && errorSql)
@@ -277,6 +318,7 @@ const AddToCart = () => {
                   <div>{`$ ${totalAmount}.00`}</div>
                 </div>
                 <button
+                  onClick={createCheckOutSession}
                   type="submit"
                   className="border-l-2 border-t-2 border-textGrey bg-blackButton px-10 py-3 text-sm font-semibold text-white"
                 >
