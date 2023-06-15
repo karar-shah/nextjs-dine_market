@@ -78,15 +78,18 @@ const AddToCart = () => {
         const sqlData: CartList | noUser = await resSql.json();
         setDataSql(sqlData);
         setIsLoadingSql(false);
+        setIsLoading(false);
       } catch (error: any) {
         setErrorSql(error);
         setIsLoadingSql(false);
+        setIsLoading(false);
       }
     };
 
     fetchSqlData();
   }, []);
 
+  // Add items to cart when dataSql changes
   // Add items to cart when dataSql changes
   useEffect(() => {
     if (
@@ -96,19 +99,24 @@ const AddToCart = () => {
     ) {
       for (let i = 0; i < dataSql.res.length; i++) {
         const item = dataSql.res[i] as CartItem;
-        dispatch(
-          counterActions.addToCart({
-            product: {
-              id: item.product_id,
-              price: parseInt(item.price, 10),
-              size: item.size,
-            },
-            quantity: item.quantity,
-          })
+        const existingItem = reduxItems.find(
+          (reduxItem) => reduxItem.id === item.product_id
         );
+        if (!existingItem) {
+          dispatch(
+            counterActions.addToCart({
+              product: {
+                id: item.product_id,
+                price: parseInt(item.price, 10),
+                size: item.size,
+              },
+              quantity: item.quantity,
+            })
+          );
+        }
       }
     }
-  }, [dataSql]);
+  }, [dataSql, reduxItems]);
 
   // Fetch updated data for items in Redux on reduxItems change
   useEffect(() => {
@@ -137,7 +145,9 @@ const AddToCart = () => {
   if (isLoading)
     return (
       <div className="mx-16 mt-32 text-center lg:px-24">
-        <h1 className="mb-8 text-4xl font-bold text-textGrey">Cart is Empty</h1>
+        <h1 className="mb-8 text-4xl font-bold text-textGrey">
+          Loading Cart...
+        </h1>
       </div>
     );
 
