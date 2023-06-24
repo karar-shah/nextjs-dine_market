@@ -9,14 +9,14 @@ export const GET = async (request: NextRequest) => {
   const uid = cookies().get("user_id")?.value;
   // const req = request.nextUrl;
   // const uid = req.searchParams.get("user_id");
-  console.log(uid);
+  // console.log(uid);
   if (uid) {
     try {
       const res = await db
         .select()
         .from(cartTable)
         .where(eq(cartTable.user_id, uid));
-      console.log(res);
+      // console.log(res);
       return NextResponse.json({ res });
     } catch (error) {
       // console.log(error);
@@ -51,7 +51,7 @@ export const POST = async (request: NextRequest) => {
       .returning();
     return NextResponse.json({ res });
   } catch (error) {
-    console.log(error);
+    console.log("Cart api error:", error);
     return NextResponse.json({ message: "Some wrong in POST request" });
   }
 };

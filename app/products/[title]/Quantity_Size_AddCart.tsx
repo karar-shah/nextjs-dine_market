@@ -99,7 +99,7 @@ export default function Quantity_Size_AddCart({
             SELECT SIZE
           </div>
           {/* Test div for total items in redux */}
-          <div>
+          {/* <div>
             <ul>
               {allitems.map((i) => (
                 <li
@@ -107,7 +107,7 @@ export default function Quantity_Size_AddCart({
                 >{`id:${i.id} quantity${i.quantity} size${i.size} price${i.totalPrice}`}</li>
               ))}
             </ul>
-          </div>
+          </div> */}
           <div className="flex gap-3 ">
             <button
               onClick={() => handleSize("XS")}

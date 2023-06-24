@@ -7,15 +7,17 @@ import {
   CartList,
   cartPageItem,
   noUser,
+  reduxProductState,
 } from "../interface/interface";
 import { getProductData1 } from "../interface/fetchFunction";
 import React, { useEffect, useState } from "react";
 import { urlForImage } from "@/sanity/lib/image";
 import { counterActions } from "../store/slice/CartSlice";
-import { loadStripe } from "@stripe/stripe-js";
+import getStripePromise from "../lib/stripe";
+import Link from "next/link";
 
-// -----------------------------------------------------------------
 const AddToCart = () => {
+  // Statues
   const [data, setData] = useState<cartPageItem[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -42,7 +44,7 @@ const AddToCart = () => {
         )}]]{title, image, price, clothType -> {clothTypeName}}`;
         try {
           const result: cartPageItem[] = await getProductData1(URL1);
-          console.log("Updating dataState", result);
+          // console.log("Updating dataState", result);
           setData(result);
           setIsLoading(false);
         } catch (error: any) {
@@ -125,46 +127,46 @@ const AddToCart = () => {
     }
   }, [reduxItems]);
 
-  // Stripe Payment
-  const publishableKey = process.env
-    .NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string;
-  const stripePromise = loadStripe(publishableKey);
-
-  const createCheckOutSession = async () => {
-    // setLoading(true);
-    const stripe = await stripePromise;
-
-    const checkoutSession = await fetch(
-      "http://localhost:3000/api/create-stripe-session",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          item: {
-            name: "Dine Market Product",
-            description: "Product description",
-            image:
-              "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1400&q=80",
-            quantity: totalQuant,
-            price: totalAmount,
-          },
-        }),
-      }
-    );
-
-    console.log("Result------------- in prod page==========", checkoutSession);
-
-    const sessionID = await checkoutSession.json();
-    const result = await stripe?.redirectToCheckout({
-      sessionId: sessionID,
+  // Checkout handler
+  const handleCheckout = async (
+    reduxProducts: reduxProductState[],
+    sanityProduct: cartPageItem[]
+  ) => {
+    // New array from redux array with image url
+    const stripeProducts = reduxProducts.map((item1) => {
+      const matchingItem = sanityProduct.find(
+        (item2) => item2.title === item1.id
+      );
+      const image = matchingItem ? urlForImage(matchingItem.image).url() : null;
+      return {
+        ...item1,
+        image,
+      };
     });
-    if (result?.error) {
-      alert(result.error.message);
+    // Calling stripe API
+    const stripe = await getStripePromise();
+    const response = await fetch("/api/stripe-session/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      cache: "no-cache",
+      body: JSON.stringify(stripeProducts),
+    });
+    const data = await response.json();
+    if (data.session) {
+      stripe?.redirectToCheckout({ sessionId: data.session.id });
+      console.log("Returned strope", data);
     }
-    // setLoading(false);
   };
+
+  // Dots for Loading ...
+  const [dots, setDots] = useState("");
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots((prevDots) => (prevDots.length < 3 ? prevDots + "." : ""));
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
 
   // UI RENDERING
   if (error && errorSql)
@@ -173,7 +175,7 @@ const AddToCart = () => {
     return (
       <div className="mx-16 mt-32 text-center lg:px-24">
         <h1 className="mb-8 text-4xl font-bold text-textGrey">
-          Loading Cart...
+          Loading Cart{dots}
         </h1>
       </div>
     );
@@ -318,7 +320,9 @@ const AddToCart = () => {
                   <div>{`$ ${totalAmount}.00`}</div>
                 </div>
                 <button
-                  onClick={createCheckOutSession}
+                  onClick={() => {
+                    handleCheckout(reduxItems, data);
+                  }}
                   type="submit"
                   className="border-l-2 border-t-2 border-textGrey bg-blackButton px-10 py-3 text-sm font-semibold text-white"
                 >
@@ -329,10 +333,42 @@ const AddToCart = () => {
           </div>
         </div>
       ) : (
-        <div className="mx-16 mt-32 text-center lg:px-24">
-          <h1 className="mb-8 text-4xl font-bold text-textGrey">
+        <div className="mx-8 mt-32 flex flex-col items-center text-center md:mx-16 lg:px-24">
+          <h1 className="mb-8 text-3xl font-bold text-textGrey md:text-4xl">
             Cart is Empty
           </h1>
+          <Link href={"/all-products"}>
+            <div className="flex w-4/5 min-w-[180px] items-center justify-center border-l-2 border-t-2 border-textGrey bg-blackButton p-4 text-sm font-semibold text-white md:min-w-[200px] md:text-base lg:w-2/6">
+              <button className="flex flex-row items-center justify-center">
+                <svg
+                  className="pr-1"
+                  stroke="currentColor"
+                  fill="none"
+                  strokeWidth="0"
+                  viewBox="0 0 24 24"
+                  height="26"
+                  width="26"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M5.79166 2H1V4H4.2184L6.9872 16.6776H7V17H20V16.7519L22.1932 7.09095L22.5308 6H6.6552L6.08485 3.38852L5.79166 2ZM19.9869 8H7.092L8.62081 15H18.3978L19.9869 8Z"
+                    fill="currentColor"
+                  ></path>
+                  <path
+                    d="M10 22C11.1046 22 12 21.1046 12 20C12 18.8954 11.1046 18 10 18C8.89543 18 8 18.8954 8 20C8 21.1046 8.89543 22 10 22Z"
+                    fill="currentColor"
+                  ></path>
+                  <path
+                    d="M19 20C19 21.1046 18.1046 22 17 22C15.8954 22 15 21.1046 15 20C15 18.8954 15.8954 18 17 18C18.1046 18 19 18.8954 19 20Z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+                <div className="text-center">Start Shopping</div>
+              </button>
+            </div>
+          </Link>
         </div>
       )}
     </div>

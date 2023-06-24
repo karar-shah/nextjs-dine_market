@@ -13,6 +13,7 @@ export const findImage = (
 ): Iimage | undefined => {
   for (const element of data) {
     if (element.title === title) {
+      // console.log(element.image);
       return element.image;
     }
   }
