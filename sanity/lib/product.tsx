@@ -31,5 +31,30 @@ export const products = {
       title: "Image",
       type: "image",
     },
+    defineField({
+      name: "clothType",
+      title: "Cloth Type",
+      type: "reference",
+      to: [
+        {
+          type: "clothType",
+        },
+      ],
+    }),
+    {
+      name: "product_details",
+      title: "PRODUCT DETAILS",
+      type: "string",
+    },
+    {
+      name: "productCare",
+      title: "PRODUCT CARE",
+      type: "array",
+      of: [
+        {
+          type: "string",
+        },
+      ],
+    },
   ],
 };

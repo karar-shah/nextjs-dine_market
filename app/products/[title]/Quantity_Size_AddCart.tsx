@@ -1,44 +1,43 @@
 "use client";
-import React, { useState } from "react";
-import { IProductsDetail } from "../interface/interface";
+import React from "react";
+import { IProductsDetail } from "../../interface/interface";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
+import { counterActions } from "@/app/store/slice/CartSlice";
 
 export default function Quantity_Size_AddCart({
   params,
 }: {
   params: IProductsDetail;
 }) {
-  // Sending product to DB
-  const handleAddToCart = async () => {
+  const dispatch = useDispatch();
+
+  const user_size = useSelector((state: RootState) => state.CartSlice.size);
+  const value = useSelector((state: RootState) => state.CartSlice.value);
+  const allitems = useSelector((state: RootState) => state.CartSlice.items);
+
+  // post item on DB
+  const postCartItemtoDB = async () => {
+    toast.loading(`Wait... Adding to cart`);
     const res = await fetch("/api/cart", {
       method: "POST",
       body: JSON.stringify({
         product_id: params.title,
-        quantity: user_quantity,
         size: user_size,
+        quantity: value,
+        price: params.price,
       }),
     });
-    const result = await res.json();
-    toast(`${params.title} added to cart`);
+    // const result = await res.json();
+    // console.log(result);
+    toast.dismiss();
   };
 
-  // User Quantity State
-  const [user_quantity, setquantity] = useState(1);
-  const handleDecrement = () => {
-    if (user_quantity > 0) {
-      setquantity(user_quantity - 1);
-    }
-  };
-  const handleIncrement = () => {
-    if (user_quantity < 5) {
-      setquantity(user_quantity + 1);
-    }
-  };
-  // User Size State
-  const [user_size, setSize] = useState("M");
-  const handleSize = (sizeVal: string) => {
-    setSize(sizeVal);
+  // Update selected size state
+  const handleSize = (curSize: string) => {
+    dispatch(counterActions.updateSize(curSize));
   };
   // Selected Size CSS
   const getButtonClassName = (buttonSize: string) => {
@@ -46,6 +45,42 @@ export default function Quantity_Size_AddCart({
       user_size === buttonSize ? "shadow-xl shadow-gray-500" : ""
     }`;
   };
+
+  // Add items to cart
+  const addCartIncrement = async () => {
+    if (value > 0 && user_size !== "") {
+      dispatch(
+        counterActions.addToCart({
+          product: {
+            id: params.title,
+            price: parseInt(params.price, 10),
+            size: user_size,
+          },
+          quantity: value,
+        })
+      );
+      await postCartItemtoDB();
+      toast(`${params.title} added to cart`);
+    } else {
+      if (user_size === "") {
+        toast.error(`Please select size`);
+      } else {
+        toast.error(`Please Select quantity`);
+      }
+    }
+  };
+
+  const smallInc = () => {
+    if (value < 5) {
+      dispatch(counterActions.smallIncrement(1));
+    }
+  };
+  const smallDec = () => {
+    if (value > 0) {
+      dispatch(counterActions.smallDecrement(1));
+    }
+  };
+
   return (
     <>
       <ToastContainer
@@ -63,6 +98,16 @@ export default function Quantity_Size_AddCart({
           <div className="text-sm font-bold leading-4 tracking-wider text-textBlack">
             SELECT SIZE
           </div>
+          {/* Test div for total items in redux */}
+          {/* <div>
+            <ul>
+              {allitems.map((i) => (
+                <li
+                  key={`${i.id}${i.size}`}
+                >{`id:${i.id} quantity${i.quantity} size${i.size} price${i.totalPrice}`}</li>
+              ))}
+            </ul>
+          </div> */}
           <div className="flex gap-3 ">
             <button
               onClick={() => handleSize("XS")}
@@ -101,12 +146,13 @@ export default function Quantity_Size_AddCart({
             Quantity
           </div>
           <div className="flex items-center gap-1">
-            <button onClick={handleDecrement} className="mr-2 cursor-pointer">
+            <button onClick={smallDec} className="mr-2 cursor-pointer">
               -
             </button>
-            <span>{user_quantity}</span>
+            {/* <span>{specificItem?.quantity}</span> */}
+            <span>{value}</span>
             <button
-              onClick={handleIncrement}
+              onClick={smallInc}
               className="ml-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 border-textBlack"
             >
               +
@@ -116,7 +162,8 @@ export default function Quantity_Size_AddCart({
         <div className="flex items-center gap-4">
           <div className="flex w-4/5 min-w-[180px] items-center justify-center border-l-2 border-t-2 border-textGrey bg-blackButton p-4 text-base font-semibold text-white lg:w-2/6">
             <button
-              onClick={handleAddToCart}
+              // onClick={handleAddToCart}
+              onClick={addCartIncrement}
               className="flex flex-row items-center justify-center gap-3"
             >
               <svg

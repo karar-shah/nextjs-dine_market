@@ -2,12 +2,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import NavCart from "./NavCart";
+// import { useSelector } from "react-redux";
+// import { RootState } from "../store/store";
 
 export default function MobilePopUp() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(!open);
   };
+  // const counterValue = useSelector((state: RootState) => state.CartSlice.value);
   return (
     <>
       {/* TopBar */}
@@ -75,7 +79,7 @@ export default function MobilePopUp() {
           {/* List of links */}
           <li>
             {/* Cart button */}
-            <Link onClick={() => setOpen(!open)} href="/cart">
+            {/* <Link onClick={() => setOpen(!open)} href="/cart">
               <button className="relative rounded-full bg-gray-200 p-4">
                 <svg
                   stroke="currentColor"
@@ -102,10 +106,11 @@ export default function MobilePopUp() {
                   ></path>
                 </svg>
                 <span className="absolute right-1 top-0 h-6 w-6 rounded-full bg-red-600 text-white">
-                  0
+                  {0}
                 </span>
               </button>
-            </Link>
+            </Link> */}
+            <NavCart />
           </li>
           <li>
             <Link onClick={() => setOpen(!open)} href="/female">

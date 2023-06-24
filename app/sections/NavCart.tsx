@@ -1,36 +1,17 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import { cookies } from "next/dist/client/components/headers";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
-export default async function NavCart() {
-  // GET product from DB
-  const handleCartData = async () => {
-    // If user_id in browser cookie
-    // const uid = cookies().get("user_id");
-    // console.log(uid);
-    // let uidPresent: boolean;
-    // if (typeof uid === "string") {
-    //   uidPresent = true;
-    //   const res = await fetch(
-    //     `/api/cart?user_id=0391bc2c-6837-400f-bc0f-818a5e8103b3`,
-    //     { method: "GET" }
-    //   );
-    //   const result = await res.json();
-    //   console.log(result);
-    // } else {
-    //   uidPresent = false;
-    // }
-    // const res = await fetch(`/api/cart`, { method: "GET" });
-    // const result = await res.json();
-  };
+const NavCart = () => {
+  const productQuantity = useSelector(
+    (state: RootState) => state.CartSlice.totalQuantity
+  );
   return (
     <div>
-      <Link onClick={handleCartData} href="/cart">
-        <button
-          // onClick={handleAddToCart}
-          className="relative rounded-full bg-gray-200 p-3"
-        >
+      <Link href="/cart">
+        <div className="relative rounded-full bg-gray-200 p-3">
           <svg
             stroke="currentColor"
             fill="none"
@@ -55,11 +36,13 @@ export default async function NavCart() {
               fill="currentColor"
             ></path>
           </svg>
-          <span className="absolute right-1 top-0 h-4 w-4 rounded-full bg-red-600 text-sm text-white">
-            0
+          <span className="absolute right-1 top-0 h-[18px] w-[18px] items-center justify-center rounded-full bg-red-600 text-center text-sm text-white">
+            {productQuantity}
           </span>
-        </button>
+        </div>
       </Link>
     </div>
   );
-}
+};
+
+export default NavCart;
