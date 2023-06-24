@@ -7,11 +7,9 @@ const stripe = new Stripe(key, { apiVersion: "2022-11-15" });
 
 export async function POST(request: NextRequest) {
   const body: [] = await request.json();
-  // console.log("Stripe API", body);
 
   try {
     if (body.length > 0) {
-      // console.log(body[0].image);
       const session = await stripe.checkout.sessions.create({
         submit_type: "pay",
         mode: "payment",
