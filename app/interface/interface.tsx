@@ -49,3 +49,15 @@ export type cartPageItem = {
   price: string;
   image: Iimage;
 };
+
+export type fullCartDetail =
+  | {
+      image: string | null;
+      price: string | null;
+      id: string;
+      size: string;
+      quantity: number;
+      totalPrice: number;
+      clothType: string | null;
+    }[]
+  | null;

@@ -6,6 +6,7 @@ import {
   CartItem,
   CartList,
   cartPageItem,
+  fullCartDetail,
   noUser,
   reduxProductState,
 } from "../interface/interface";
@@ -18,7 +19,8 @@ import Link from "next/link";
 
 const AddToCart = () => {
   // Statues
-  const [data, setData] = useState<cartPageItem[] | null>(null);
+  // const [data, setData] = useState<cartPageItem[] | null>(null);
+  const [data, setData] = useState<fullCartDetail>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [dataSql, setDataSql] = useState<CartList | noUser>({ res: [] });
@@ -45,7 +47,27 @@ const AddToCart = () => {
         try {
           const result: cartPageItem[] = await getProductData1(URL1);
           // console.log("Updating dataState", result);
-          setData(result);
+
+          const fullArray = reduxItems.map((item1) => {
+            const matchingItem = result.find(
+              (item2) => item2.title === item1.id
+            );
+            const image = matchingItem
+              ? urlForImage(matchingItem.image).url()
+              : null;
+            const price = matchingItem ? matchingItem.price : null;
+            const clothType = matchingItem
+              ? matchingItem.clothType.clothTypeName
+              : null;
+            return {
+              ...item1,
+              image,
+              price,
+              clothType,
+            };
+          });
+          console.log("fullArray", fullArray);
+          setData(fullArray);
           setIsLoading(false);
         } catch (error: any) {
           setError(error);
@@ -115,7 +137,28 @@ const AddToCart = () => {
         )}]]{title, image, price, clothType -> {clothTypeName}}`;
         try {
           const updatedData: cartPageItem[] = await getProductData1(URL);
-          setData(updatedData);
+
+          const fullArray1 = reduxItems.map((item1) => {
+            const matchingItem = updatedData.find(
+              (item2) => item2.title === item1.id
+            );
+            const image = matchingItem
+              ? urlForImage(matchingItem.image).url()
+              : null;
+            const price = matchingItem ? matchingItem.price : null;
+            const clothType = matchingItem
+              ? matchingItem.clothType.clothTypeName
+              : null;
+
+            return {
+              ...item1,
+              image,
+              price,
+              clothType,
+            };
+          });
+
+          setData(fullArray1);
           setIsLoading(false);
         } catch (error: any) {
           setError(error);
@@ -129,20 +172,25 @@ const AddToCart = () => {
 
   // Checkout handler
   const handleCheckout = async (
-    reduxProducts: reduxProductState[],
-    sanityProduct: cartPageItem[]
+    // reduxProducts: reduxProductState[],
+    // sanityProduct: cartPageItem[]
+    stripeProducts: fullCartDetail
   ) => {
     // New array from redux array with image url
-    const stripeProducts = reduxProducts.map((item1) => {
-      const matchingItem = sanityProduct.find(
-        (item2) => item2.title === item1.id
-      );
-      const image = matchingItem ? urlForImage(matchingItem.image).url() : null;
-      return {
-        ...item1,
-        image,
-      };
-    });
+    // const stripeProducts = reduxProducts.map((item1) => {
+    //   const matchingItem = sanityProduct.find(
+    //     (item2) => item2.title === item1.id
+    //   );
+    //   const image = matchingItem ? urlForImage(matchingItem.image).url() : null;
+    //   const price = matchingItem ? matchingItem.price : null;
+    //   const clothType = matchingItem ? matchingItem.clothType.clothTypeName : null;
+    //   return {
+    //     ...item1,
+    //     image,
+    //     price,
+    //     clothType,
+    //   };
+    // });
     // Calling stripe API
     const stripe = await getStripePromise();
     const response = await fetch("/api/stripe-session/", {
@@ -168,6 +216,19 @@ const AddToCart = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Detete item
+  // const deleteItemFromCart =async () => {
+  //   dispatch(
+  //     counterActions.addToCart({
+  //       product: {
+  //         id: params.title,
+  //         price: parseInt(params.price, 10),
+  //         size: user_size,
+  //       },
+  //       quantity: value,
+  //     })
+  //   );
+  // }
   // UI RENDERING
   if (error && errorSql)
     return <div className="mx-16 lg:px-32">Failed to load</div>;
@@ -191,14 +252,12 @@ const AddToCart = () => {
               <div className=" flex flex-col gap-16">
                 {/* Maping for Cart Items */}
                 {data.map((cartItem) => (
-                  <div key={`${cartItem.title}`}>
-                    <div className="flex flex-col gap-4 md:flex-row lg:gap-8">
+                  <div key={`${cartItem.id}`}>
+                    <div className="flex flex-col gap-3 md:flex-row lg:gap-8">
                       {/* image */}
-                      <div className="relative h-[255px] w-[240px] lg:h-[210px] lg:w-[200px]">
+                      <div className="relative h-[255px] w-[240px] lg:h-[235px] lg:w-[215px]">
                         <Image
-                          src={urlForImage(cartItem.image).url()}
-                          // height={202}
-                          // width={200}
+                          src={cartItem.image as string}
                           fill={true}
                           alt="product"
                           className="rounded-md "
@@ -207,52 +266,58 @@ const AddToCart = () => {
                       </div>
                       {/* product details */}
                       <div className="flex flex-grow flex-col md:gap-4">
-                        <div
-                          className="min-w[300px] md:min-w[4050px]  lg:min-w[330px] flex justify-between
+                        <div>
+                          {/* Title */}
+                          <div
+                            className="min-w[300px] md:min-w[4050px]  lg:min-w[330px] flex justify-between
                         pt-8 md:pt-0 lg:gap-36"
-                        >
-                          <div className="text-2xl font-light">
-                            {cartItem.title}
+                          >
+                            <div className="text-2xl font-light">
+                              {cartItem.id}
+                            </div>
+                            {/* Delete icon */}
+                            <button className="">
+                              <svg
+                                stroke="currentColor"
+                                fill="none"
+                                strokeWidth="0"
+                                viewBox="0 0 24 24"
+                                height="28"
+                                width="28"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                ></path>
+                              </svg>
+                            </button>
                           </div>
-                          {/* Delete icon */}
-                          <button className="">
-                            <svg
-                              stroke="currentColor"
-                              fill="none"
-                              strokeWidth="0"
-                              viewBox="0 0 24 24"
-                              height="28"
-                              width="28"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                              ></path>
-                            </svg>
-                          </button>
+                          {/* Cloth Type */}
+                          <div className="py-2 font-semibold text-gray-700">
+                            {cartItem.clothType}
+                          </div>
                         </div>
-                        <div className="py-2 font-semibold text-gray-700">
-                          {cartItem.clothType.clothTypeName}
-                          {/* Dress */}
-                        </div>
-                        <div className="font-semibold">
-                          Delivery Estimateion
-                        </div>
-                        <div className="py-2 font-semibold text-yellow-500">
-                          5 Working days
+                        <div>
+                          <div className="font-semibold">
+                            Delivery Estimateion
+                          </div>
+                          <div className="py-2 font-semibold text-yellow-500">
+                            5 Working days
+                          </div>
                         </div>
                         <div className="flex">
+                          <div className=" font-semibold text-gray-700">{`Size:\xa0`}</div>
+                          <div className=" font-semibold text-gray-700">{` ${cartItem.size}`}</div>
+                        </div>
+
+                        <div className="flex">
                           <div className="text-xl font-semibold">
-                            {/* ${cartItem.price} */}$
-                            {
-                              reduxItems.find(
-                                (item) => item.id === cartItem.title
-                              )?.totalPrice
-                            }
+                            {cartItem.totalPrice}.00$
                           </div>
+
                           <div className="ml-auto flex items-center gap-4">
                             {/* Minus */}
                             {/* <button onClick={decrement}> */}
@@ -269,13 +334,9 @@ const AddToCart = () => {
                                 <path d="M872 474H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z"></path>
                               </svg>
                             </button> */}
-                            <div className="text-black">Qty.</div>
-                            <span>
-                              {
-                                reduxItems.find(
-                                  (item) => item.id === cartItem.title
-                                )?.quantity
-                              }
+                            <div className="font-semibold">Qty.</div>
+                            <span className="font-semibold text-gray-700">
+                              {cartItem.quantity}
                             </span>
                             {/* <span>{productQuantity}</span> */}
                             {/* Plus */}
@@ -321,7 +382,7 @@ const AddToCart = () => {
                 </div>
                 <button
                   onClick={() => {
-                    handleCheckout(reduxItems, data);
+                    handleCheckout(data);
                   }}
                   type="submit"
                   className="border-l-2 border-t-2 border-textGrey bg-blackButton px-10 py-3 text-sm font-semibold text-white"
