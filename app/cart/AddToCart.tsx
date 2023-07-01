@@ -18,7 +18,7 @@ import getStripePromise from "../lib/stripe";
 import Link from "next/link";
 
 const AddToCart = () => {
-  // Statues
+  // Statues fff
   // const [data, setData] = useState<cartPageItem[] | null>(null);
   const [data, setData] = useState<fullCartDetail>(null);
   const [isLoading, setIsLoading] = useState(true);
